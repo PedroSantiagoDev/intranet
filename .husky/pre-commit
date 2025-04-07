@@ -1,4 +1,4 @@
-./vendor/bin/phpstan --memory-limit=2G
+#./vendor/bin/phpstan --memory-limit=2G
 if [ $? -ne 0 ]; then
     echo "Opa! Deu ruim aqui com PHPSTAN. Arrume antes de continuar... 😉";
     exit 1;

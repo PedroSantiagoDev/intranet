@@ -4,8 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RecipientBatchResource\{Pages};
 use App\Models\{Recipient};
+use App\Services\XmlService;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\{Tables};
@@ -56,9 +59,26 @@ class RecipientBatchResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                BulkAction::make('create_batch')
+                    ->action(function ($records) {
+                        // TODO colocar em um enum os tamanhos fixos de arquivo
+                        define('MAX_SIZE', 209715200); // 200mb
+
+                        $totalSize = $records->sum('file_size');
+
+                        if ($totalSize > MAX_SIZE) {
+                            Notification::make()
+                                ->title('Tamanho excedido!')
+                                ->body('O lote não pode ultrapassar 200MB')
+                                ->danger()
+                                ->persistent()
+                                ->send();
+
+                            return;
+                        }
+
+                        $xml = (new XmlService(user: user(), batchNumber: 16))->create($records);
+                    }),
             ]);
     }
 
