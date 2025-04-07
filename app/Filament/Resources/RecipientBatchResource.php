@@ -12,7 +12,7 @@ use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\{Tables};
-use Illuminate\Database\Eloquent\{Builder};
+use Illuminate\Database\Eloquent\{Builder, Collection};
 
 class RecipientBatchResource extends Resource
 {
@@ -60,7 +60,7 @@ class RecipientBatchResource extends Resource
             ])
             ->bulkActions([
                 BulkAction::make('create_batch')
-                    ->action(function ($records) {
+                    ->action(function (Collection $records) {
                         // TODO colocar em um enum os tamanhos fixos de arquivo
                         define('MAX_SIZE', 209715200); // 200mb
 
