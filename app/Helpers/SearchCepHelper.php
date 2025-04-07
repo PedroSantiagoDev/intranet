@@ -9,8 +9,12 @@ class SearchCepHelper
     /**
      * @return array<string, string>
      */
-    public static function search(string $cep): null|array
+    public static function search(?string $cep = null): null|array
     {
+        if (empty($cep)) {
+            return null;
+        }
+
         $cep = preg_replace('/[^0-9]/', '', $cep);
 
         $response = Http::get("https://viacep.com.br/ws/{$cep}/json/");
