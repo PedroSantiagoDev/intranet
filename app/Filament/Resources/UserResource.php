@@ -52,13 +52,13 @@ class UserResource extends Resource
                             ->password()
                             ->required(fn (string $operation): bool => $operation === 'create')
                             ->confirmed()
-                            ->maxLength(255),
+                            ->dehydrated(fn ($state) => filled($state)),
 
                         TextInput::make('password_confirmation')
                             ->label('Confirmação de Senha')
                             ->password()
                             ->required(fn (string $operation): bool => $operation === 'create')
-                            ->maxLength(255),
+                            ->dehydrated(fn ($state) => filled($state)),
                     ])->columns(2),
             ]);
     }
