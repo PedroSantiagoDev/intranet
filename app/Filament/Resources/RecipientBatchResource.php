@@ -57,7 +57,7 @@ class RecipientBatchResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 BulkAction::make('create_batch')
@@ -125,9 +125,9 @@ class RecipientBatchResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListRecipientBatches::route('/'),
-            'create' => Pages\CreateRecipientBatch::route('/create'),
-            'edit'   => Pages\EditRecipientBatch::route('/{record}/edit'),
+            'index' => Pages\ListRecipientBatches::route('/'),
+            // 'create' => Pages\CreateRecipientBatch::route('/create'),
+            // 'edit'   => Pages\EditRecipientBatch::route('/{record}/edit'),
         ];
     }
 }
