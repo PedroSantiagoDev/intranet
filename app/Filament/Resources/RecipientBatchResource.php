@@ -66,6 +66,18 @@ class RecipientBatchResource extends Resource
                         define('MAX_SIZE', 209715200); // 200mb
 
                         $totalSize = $records->sum('file_size');
+                        $user      = user();
+
+                        if (!$user->unit) {
+                            Notification::make()
+                                ->title('Vincular a uma unidade!')
+                                ->body('Usuário esta sem veiculação com uma unidade')
+                                ->danger()
+                                ->persistent()
+                                ->send();
+
+                            return;
+                        }
 
                         if ($totalSize > MAX_SIZE) {
                             Notification::make()
@@ -79,9 +91,8 @@ class RecipientBatchResource extends Resource
                         }
 
                         try {
-                            DB::transaction(function () use ($records) {
+                            DB::transaction(function () use ($records, $user) {
                                 $batchNumber = Batch::generateBatchNumber();
-                                $user        = user();
 
                                 $xml = (new XmlService(user: $user, batchNumber: $batchNumber))->create($records);
 
