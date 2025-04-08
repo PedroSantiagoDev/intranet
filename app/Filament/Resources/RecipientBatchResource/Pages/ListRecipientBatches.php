@@ -16,10 +16,12 @@ class ListRecipientBatches extends ListRecords
     {
         $selfEnvelopmentCount = Recipient::query()
             ->where('finish_type', 'SELFENVELOPMENT')
+            ->where('in_batch', false)
             ->count();
 
         $insertionCount = Recipient::query()
             ->where('finish_type', 'INSERTION')
+            ->where('in_batch', false)
             ->count();
 
         return [
