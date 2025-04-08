@@ -63,4 +63,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Unit::class);
     }
+
+    /**
+     * @return HasMany<Batch,$this>
+     */
+    public function batches(): HasMany
+    {
+        return $this->hasMany(Batch::class);
+    }
 }

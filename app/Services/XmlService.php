@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\{Recipient, User};
+use App\Models\User;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Storage;

@@ -2,17 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\RecipientBatchResource\{Pages};
-use App\Models\{Recipient};
+use App\Filament\Resources\RecipientBatchResource\Pages;
+use App\Models\{Batch, Recipient};
 use App\Services\XmlService;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Tables;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\{Tables};
 use Illuminate\Database\Eloquent\{Builder, Collection};
+use Illuminate\Support\Facades\DB;
 
 class RecipientBatchResource extends Resource
 {
@@ -77,8 +78,40 @@ class RecipientBatchResource extends Resource
                             return;
                         }
 
-                        $xml = (new XmlService(user: user(), batchNumber: 16))->create($records);
-                    }),
+                        try {
+                            DB::transaction(function () use ($records) {
+                                $batchNumber = Batch::generateBatchNumber();
+                                $user        = user();
+
+                                $xml = (new XmlService(user: $user, batchNumber: $batchNumber))->create($records);
+
+                                $batch = Batch::create([
+                                    'number'     => $batchNumber,
+                                    'xml_path'   => $xml,
+                                    'user_id'    => user()->id,
+                                    'batch_date' => now(),
+                                ]);
+
+                                $batch->recipients()->sync($records->modelKeys());
+
+                                $records->first()->getModel()->whereIn('id', $records->modelKeys())->update(['in_batch' => true]);
+                            });
+
+                            Notification::make()
+                                ->title('Lote criado com sucesso!')
+                                ->success()
+                                ->send();
+                        } catch (\Exception $e) {
+                            Notification::make()
+                                ->title('Falha na operação')
+                                ->body($e->getMessage())
+                                ->danger()
+                                ->persistent()
+                                ->send();
+                        }
+                    })
+                    ->requiresConfirmation()
+                    ->deselectRecordsAfterCompletion(),
             ]);
     }
 
