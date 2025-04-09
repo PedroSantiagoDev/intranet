@@ -121,8 +121,8 @@ class XmlService
             'deCidadeRem'      => $this->user->unit->city,
             'cdUFRem'          => $this->user->unit->state,
             'nuCEPRem'         => $this->user->unit->postal_code,
-            'nuFoneRem'        => '',
-            'deEmailRem'       => '',
+            'nuFoneRem'        => $this->user->unit->phone,
+            'deEmailRem'       => $this->user->unit->email,
         ]);
 
         return $remCompliance;

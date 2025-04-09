@@ -25,6 +25,8 @@ class UnitFactory extends Factory
             'neighborhood'          => $this->faker->optional()->word,
             'city'                  => $this->faker->city,
             'state'                 => strtoupper($this->faker->stateAbbr),
+            'phone'                 => $this->faker->phoneNumber(),
+            'email'                 => $this->faker->email(),
             'postal_code'           => str_replace('-', '', $this->faker->postcode), // garante 8 dígitos sem traço
             'matrix_code'           => $this->faker->unique()->bothify(str_repeat('#', 10)),
             'contract_number'       => $this->faker->bothify(str_repeat('#', 10)),

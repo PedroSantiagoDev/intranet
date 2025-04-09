@@ -131,6 +131,18 @@ class UnitResource extends Resource
                             ])
                             ->searchable(),
                     ])->columns(2),
+
+                Section::make('Telefone e E-mail')
+                    ->schema([
+                        TextInput::make('phone')
+                            ->label('Telefone')
+                            ->mask('(98)9999-9999')
+                            ->maxLength(11),
+                        TextInput::make('email')
+                            ->label('E-mail')
+                            ->maxLength(255),
+                    ])->columns(2),
+
                 Section::make('Configurações do e-Carta')
                     ->schema([
                         TextInput::make('matrix_code')

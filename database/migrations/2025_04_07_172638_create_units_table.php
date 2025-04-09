@@ -20,6 +20,8 @@ return new class () extends Migration {
             $table->string('neighborhood', 72)->nullable();
             $table->string('city', 72);
             $table->char('state', 2);
+            $table->char('phone', 11);
+            $table->string('email');
             $table->char('postal_code', 8);
             $table->char('matrix_code', 10)->unique();
             $table->char('contract_number', 10);

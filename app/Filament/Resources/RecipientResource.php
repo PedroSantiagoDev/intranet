@@ -157,11 +157,17 @@ class RecipientResource extends Resource
                     ->label('Cidade'),
                 TextColumn::make('state')
                     ->label('Estado'),
+                TextColumn::make('created_at')
+                    ->label('Cadastrado em')
+                    ->dateTime('d/m/Y H:i')
+                    ->sortable(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
