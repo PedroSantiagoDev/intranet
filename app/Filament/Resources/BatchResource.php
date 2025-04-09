@@ -21,6 +21,8 @@ class BatchResource extends Resource
 
     protected static ?string $navigationGroup = 'Publisher';
 
+    protected static ?string $navigationLabel = 'Lotes';
+
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form

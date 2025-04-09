@@ -23,6 +23,8 @@ class RecipientBatchResource extends Resource
 
     protected static ?string $navigationLabel = 'Gestão dos destinatários';
 
+    protected static ?string $label = 'Gestão dos destinatários';
+
     protected static ?string $navigationGroup = 'Publisher';
 
     protected static ?int $navigationSort = 1;

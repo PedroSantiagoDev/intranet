@@ -21,6 +21,10 @@ class RecipientResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-envelope';
 
+    protected static ?string $navigationLabel = 'Destinatários';
+
+    protected static ?string $label = 'destinatários';
+
     public static function form(Form $form): Form
     {
         return $form

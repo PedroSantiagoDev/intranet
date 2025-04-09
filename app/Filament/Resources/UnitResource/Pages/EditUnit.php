@@ -16,4 +16,11 @@ class EditUnit extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        $data['user_id'] = user()->id;
+
+        return $data;
+    }
 }
