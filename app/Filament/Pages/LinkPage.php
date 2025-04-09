@@ -9,9 +9,11 @@ use Filament\Pages\Page;
 
 class LinkPage extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-link';
 
     protected static string $view = 'filament.pages.link-page';
+
+    protected static ?string $navigationLabel = 'Links';
 
     protected function getHeaderActions(): array
     {
@@ -27,9 +29,7 @@ class LinkPage extends Page
     public function getViewData(): array
     {
         return [
-            'links'       => Link::where('is_active', true)->get(),
-            'totalLinks'  => Link::count(),
-            'activeLinks' => Link::where('is_active', true)->count(),
+            'links' => Link::where('is_active', true)->get(),
         ];
     }
 }
