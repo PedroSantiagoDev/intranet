@@ -24,16 +24,18 @@ class AuthPanelProvider extends PanelProvider
             ->colors([
                 'danger'  => Color::Rose,
                 'gray'    => Color::Slate,
-                'info'    => Color::Blue,
-                'primary' => Color::Indigo,
-                'success' => Color::Emerald,
-                'warning' => Color::Orange,
+                'info'    => Color::Sky,
+                'primary' => Color::Blue,
+                'success' => Color::Teal,
+                'warning' => Color::Amber,
             ])
-            ->brandName('CODEVASF')
+            ->brandLogo(asset('assets/images/logo.jpeg'))
+            ->favicon(asset('assets/images/logo.jpeg'))
+            ->brandLogoHeight('2rem')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                // Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([

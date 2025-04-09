@@ -23,19 +23,19 @@ class DatabaseSeeder extends Seeder
             'neighborhood'          => 'Areinha',
             'city'                  => 'São Luís',
             'state'                 => 'MA',
-            'postal_code'           => '65030-015',
+            'postal_code'           => '65030015',
             'phone'                 => '(98)3198-1300',
             'email'                 => 'gabinete.ma@codevasf.gov.br',
-            'matrix_code'           => 'MMDF2024',
-            'contract_number'       => 'CT2024DF',
-            'postage_card'          => 'PC1234DF',
-            'administrative_number' => 'ADM2024',
-            'posting_unit'          => 'UNIDF01',
+            'matrix_code'           => '#####',
+            'contract_number'       => '9912602305',
+            'postage_card'          => '#####',
+            'administrative_number' => '23094109',
+            'posting_unit'          => '0077649559',
         ]);
 
         User::factory()->create([
-            'name'  => 'Test User',
-            'email' => 'test@example.com',
+            'name'  => 'admin',
+            'email' => 'admin@admin.com',
         ]);
     }
 }

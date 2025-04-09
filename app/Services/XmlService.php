@@ -43,7 +43,7 @@ class XmlService
         $idMessage = $xml->addChild('idMensagem');
         $idMessage->addChild('nmServico', 'SolicitaAR');
         $idMessage->addChild('nuVersao', '1.0');
-        $idMessage->addChild('deServico', 'Solicitacao de ARs para cumprimento');
+        $idMessage->addChild('deServico', '????');
         $idMessage->addChild('seqServico', (string) $this->batchNumber);
         $idMessage->addChild('nmOrigem', $this->user->unit->sender_name);
         $idMessage->addChild('identSpool', 'N');

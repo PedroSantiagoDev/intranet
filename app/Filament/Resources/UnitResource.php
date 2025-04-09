@@ -141,7 +141,7 @@ class UnitResource extends Resource
                         TextInput::make('phone')
                             ->label('Telefone')
                             ->mask('(98)9999-9999')
-                            ->maxLength(11),
+                            ->maxLength(13),
                         TextInput::make('email')
                             ->label('E-mail')
                             ->maxLength(255),

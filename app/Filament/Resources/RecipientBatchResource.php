@@ -63,6 +63,7 @@ class RecipientBatchResource extends Resource
             ])
             ->bulkActions([
                 BulkAction::make('create_batch')
+                    ->label('Criar lote')
                     ->action(function (Collection $records) {
                         // TODO colocar em um enum os tamanhos fixos de arquivo
                         define('MAX_SIZE', 209715200); // 200mb
