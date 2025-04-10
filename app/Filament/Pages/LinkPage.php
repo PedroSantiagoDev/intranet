@@ -15,6 +15,8 @@ class LinkPage extends Page
 
     protected static ?string $navigationLabel = 'Links';
 
+    protected static ?string $title = 'Seus links';
+
     protected function getHeaderActions(): array
     {
         return [

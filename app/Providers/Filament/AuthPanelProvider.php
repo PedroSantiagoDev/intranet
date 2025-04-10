@@ -4,7 +4,7 @@ namespace App\Providers\Filament;
 
 use Filament\Http\Middleware\{Authenticate, AuthenticateSession, DisableBladeIconComponents, DispatchServingFilamentEvent};
 use Filament\Support\Colors\Color;
-use Filament\{Pages, Panel, PanelProvider, Widgets};
+use Filament\{Panel, PanelProvider, Widgets};
 use Illuminate\Cookie\Middleware\{AddQueuedCookiesToResponse, EncryptCookies};
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -21,6 +21,7 @@ class AuthPanelProvider extends PanelProvider
             ->path('auth')
             ->login()
             ->profile()
+            ->registration()
             ->colors([
                 'danger'  => Color::Rose,
                 'gray'    => Color::Slate,
@@ -30,13 +31,10 @@ class AuthPanelProvider extends PanelProvider
                 'warning' => Color::Amber,
             ])
             ->brandLogo(asset('assets/images/logo.jpeg'))
-            ->favicon(asset('assets/images/logo.jpeg'))
+            ->favicon(asset('assets/favicon.ico'))
             ->brandLogoHeight('2rem')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-            ->pages([
-                // Pages\Dashboard::class,
-            ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
