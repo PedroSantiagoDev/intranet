@@ -2,9 +2,7 @@
 
 namespace App\Filament\Pages;
 
-use App\Filament\Resources\LinkResource;
 use App\Models\Link;
-use Filament\Actions\Action;
 use Filament\Pages\Page;
 
 class LinkPage extends Page
@@ -16,17 +14,6 @@ class LinkPage extends Page
     protected static ?string $navigationLabel = 'Links';
 
     protected static ?string $title = 'Seus links';
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            Action::make('gerenciar')
-                ->label('Gerenciar Links')
-                ->url(LinkResource::getUrl())
-                ->icon('heroicon-o-pencil-square')
-                ->color('primary'),
-        ];
-    }
 
     public function getViewData(): array
     {

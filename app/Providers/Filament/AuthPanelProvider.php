@@ -23,13 +23,14 @@ class AuthPanelProvider extends PanelProvider
             ->profile()
             ->registration()
             ->colors([
-                'danger'  => Color::Rose,
-                'gray'    => Color::Slate,
-                'info'    => Color::Sky,
+                'danger'  => Color::Red,
+                'gray'    => Color::Zinc,
+                'info'    => Color::Cyan,
                 'primary' => Color::Blue,
-                'success' => Color::Teal,
-                'warning' => Color::Amber,
+                'success' => Color::Green,
+                'warning' => Color::Yellow,
             ])
+            ->sidebarCollapsibleOnDesktop()
             ->brandLogo(asset('assets/images/logo.jpeg'))
             ->favicon(asset('assets/favicon.ico'))
             ->brandLogoHeight('2rem')
