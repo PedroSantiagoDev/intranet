@@ -1,7 +1,6 @@
 <?php
 
-use App\Livewire\Auth\Login;
-use App\Livewire\Auth\Register;
+use App\Livewire\Auth\{Login, Register};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

@@ -2,28 +2,28 @@
 
 namespace App\Livewire\Auth;
 
-use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\{ComponentContainer, Form};
+use Filament\Forms\Components\{Checkbox, TextInput};
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Illuminate\Auth\Events\Lockout;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\{Auth, RateLimiter, Session};
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
+use Livewire\Attributes\{Layout, Title};
 use Livewire\Component;
 
+/**
+ * @property ComponentContainer $form
+ */
 #[Layout('components.layouts.auth')]
 #[Title('Login')]
 class Login extends Component implements HasForms
 {
     use InteractsWithForms;
 
+    /** @var array<string, mixed> */
     public ?array $data = [];
 
     public function mount(): void
@@ -56,7 +56,7 @@ class Login extends Component implements HasForms
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt(['email' => $this->data['email'], 'password' => $this->data['password']], $this->data['remember'])) {
+        if (!Auth::attempt(['email' => $this->data['email'], 'password' => $this->data['password']], $this->data['remember'])) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -75,7 +75,7 @@ class Login extends Component implements HasForms
      */
     protected function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
@@ -96,7 +96,7 @@ class Login extends Component implements HasForms
      */
     protected function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->data['email']).'|'.request()->ip());
+        return Str::transliterate(Str::lower($this->data['email']) . '|' . request()->ip());
     }
 
     public function render(): View

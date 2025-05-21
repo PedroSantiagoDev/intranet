@@ -3,25 +3,27 @@
 namespace App\Livewire\Auth;
 
 use App\Models\User;
+use Filament\Forms\{ComponentContainer,Form};
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\{Auth, Hash};
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
+use Livewire\Attributes\{Layout, Title};
 use Livewire\Component;
 
+/**
+ * @property ComponentContainer $form
+ */
 #[Layout('components.layouts.auth')]
 #[Title('Register')]
 class Register extends Component implements HasForms
 {
     use InteractsWithForms;
 
+    /** @var array<string, mixed> */
     public ?array $data = [];
 
     public function mount(): void
