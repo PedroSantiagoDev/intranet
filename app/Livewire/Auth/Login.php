@@ -38,11 +38,13 @@ class Login extends Component implements HasForms
                 TextInput::make('email')
                     ->label(__('Email address'))
                     ->email()
+                    ->placeholder('email@example.com')
                     ->required(),
                 TextInput::make('password')
                     ->label(__('Password'))
                     ->password()
                     ->revealable()
+                    ->placeholder(__('Password'))
                     ->required(),
                 Checkbox::make('remember')
                     ->label(__('Remember me')),
