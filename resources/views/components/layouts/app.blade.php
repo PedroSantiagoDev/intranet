@@ -4,8 +4,12 @@
         @include('partials.head')
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-950">
+            <x-layouts.navigations.app-navigation />
 
+            <main>
+                {{ $slot }}
+            </main>
         </div>
         @livewireScripts
         @filamentScripts

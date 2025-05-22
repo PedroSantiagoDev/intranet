@@ -17,6 +17,8 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', Dashboard::class)->name('dashboard');
 
-    Route::get('logout', App\Livewire\Actions\Logout::class) // TODO mudar para post
+    Route::get('profile', fn () => 'hello profile')->name('profile'); // TODO Implementa a rota adequadamente
+
+    Route::post('logout', App\Livewire\Actions\Logout::class)
         ->name('logout');
 });
