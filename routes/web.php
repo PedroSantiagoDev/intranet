@@ -1,7 +1,7 @@
 <?php
 
 use App\Livewire\Auth\{Login, Register};
-use App\Livewire\Dashboard;
+use App\Livewire\{Dashboard, Links};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,6 +16,8 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', Dashboard::class)->name('dashboard');
+
+    Route::get('links', Links::class)->name('links');
 
     Route::get('profile', fn () => 'hello profile')->name('profile'); // TODO Implementa a rota adequadamente
 
