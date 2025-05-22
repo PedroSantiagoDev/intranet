@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace("_", "-", app()->getLocale()) }}" class="dark">
     <head>
-        @include('partials.head')
+        @include("partials.head")
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-950">
-            <x-layouts.navigations.app-navigation />
+            <x-layouts.navigation.app />
 
             <main>
-                {{ $slot }}
+                <div class="py-12">
+                    <div class="max-w-screen-2xl mx-auto sm:px-6 lg:px-8 space-y-6">
+                        {{ $slot }}
+                    </div>
+                </div>
             </main>
         </div>
         @livewireScripts
