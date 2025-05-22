@@ -2,11 +2,17 @@
 
 namespace App\Livewire;
 
+use App\Models\UserLink;
 use Filament\Forms\{ComponentContainer,Form};
 use Filament\Forms\Components\{Select, TextInput, Toggle, View as ViewFilament};
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Columns\{IconColumn, TextColumn};
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Table;
 use Illuminate\View\View;
 use Livewire\Attributes\{Layout, Title};
 use Livewire\Component;
@@ -16,8 +22,9 @@ use Livewire\Component;
  */
 #[Layout('components.layouts.app')]
 #[Title('Links')]
-class Links extends Component implements HasForms
+class Links extends Component implements HasForms, HasTable
 {
+    use InteractsWithTable;
     use InteractsWithForms;
 
     /** @var array<string, mixed> */
@@ -58,6 +65,42 @@ class Links extends Component implements HasForms
                     ->default(true),
             ])
             ->statePath('data');
+    }
+
+    public function table(Table $table): Table
+    {
+        return $table
+            ->query(UserLink::query()->where('user_id', auth()->id()))
+            ->defaultSort('created_at', 'desc')
+            ->columns([
+                TextColumn::make('name')
+                    ->label('Nome'),
+                TextColumn::make('url')
+                    ->label('URL'),
+                IconColumn::make('icon')
+                    ->label('Ícone')
+                    ->icon(fn (UserLink $record): string => "heroicon-o-{$record->icon}")
+                    ->color('primary'),
+                IconColumn::make('is_active')
+                    ->label('Ativo'),
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Action::make('edit')
+                    ->icon('heroicon-m-pencil-square')
+                    ->action(fn () => 'ola edit'),
+
+                Action::make('delete')
+                    ->requiresConfirmation()
+                    ->color('danger')
+                    ->icon('heroicon-m-trash')
+                    ->action(fn () => 'ola delete'),
+            ])
+            ->bulkActions([
+                //
+            ]);
     }
 
     public function store(): void
