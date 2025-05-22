@@ -8,7 +8,7 @@
             <x-layouts.navigation.app />
 
             <main>
-                <div class="py-12">
+                <div class="py-4">
                     <div class="max-w-screen-2xl mx-auto sm:px-6 lg:px-8 space-y-6">
                         {{ $slot }}
                     </div>
