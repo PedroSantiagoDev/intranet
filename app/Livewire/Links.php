@@ -30,7 +30,7 @@ class Links extends Component implements HasForms, HasTable
     /** @var array<string, mixed> */
     public ?array $data = [];
 
-    public string $icon = 'link';
+    public ?UserLink $editingLink = null;
 
     public function mount(): void
     {
@@ -90,13 +90,12 @@ class Links extends Component implements HasForms, HasTable
             ->actions([
                 Action::make('edit')
                     ->icon('heroicon-m-pencil-square')
-                    ->action(fn () => 'ola edit'),
-
+                    ->action(fn (UserLink $record) => $this->edit($record)),
                 Action::make('delete')
                     ->requiresConfirmation()
                     ->color('danger')
                     ->icon('heroicon-m-trash')
-                    ->action(fn () => 'ola delete'),
+                    ->action(fn (UserLink $record) => $this->destroy($record)),
             ])
             ->bulkActions([
                 //
@@ -107,10 +106,44 @@ class Links extends Component implements HasForms, HasTable
     {
         auth()->user()->userLinks()->create($this->form->getState());
 
+        $this->form->fill();
+        $this->dispatch('close-modal', id: 'create-edit-link');
+
         Notification::make()
           ->title('Criado com sucesso!')
           ->success()
           ->send();
+    }
+
+    public function edit(UserLink $userLink): void
+    {
+        $this->data = $userLink->attributesToArray();
+        $this->dispatch('open-modal', id: 'create-edit-link');
+        $this->editingLink = $userLink;
+    }
+
+    public function update(): void
+    {
+        $this->editingLink->update($this->form->getState());
+
+        $this->form->fill();
+        $this->editingLink = null;
+        $this->dispatch('close-modal', id: 'create-edit-link');
+
+        Notification::make()
+        ->title('Atualizado com sucesso!')
+        ->success()
+        ->send();
+    }
+
+    public function destroy(UserLink $userLink): void
+    {
+        $userLink->delete();
+
+        Notification::make()
+            ->title('Deletado com sucesso!')
+            ->success()
+            ->send();
     }
 
     public function render(): View
