@@ -1,9 +1,10 @@
-<div class="flex items-center space-x-2">
+<div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
     @if ($icon)
-        <span class="text-gray-500">Ícone escolhido:</span>
-        <x-filament::icon icon="heroicon-m-{{ $icon }}" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
+        <span>Ícone escolhido:</span>
+        <x-filament::icon icon="heroicon-m-{{ $icon }}" class="h-5 w-5 text-gray-600 dark:text-gray-400" />
     @else
-        <span class="text-sm text-gray-500">Nenhum ícone selecionado</span>
+        <span class="text-gray-500 dark:text-gray-400">Nenhum ícone selecionado</span>
     @endif
-    <a href="https://heroicons.com" target="_blank" class="text-blue-500 underline text-sm">Opções</a>
+
+    <a href="https://heroicons.com" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline">Ver opções</a>
 </div>

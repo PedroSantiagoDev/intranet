@@ -31,4 +31,12 @@ class Unit extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    /**
+     * @return HasMany<UnitLink,$this>
+     */
+    public function unitLinks(): HasMany
+    {
+        return $this->hasMany(UnitLink::class);
+    }
 }
