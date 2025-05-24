@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\{Unit, User};
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,9 +15,23 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+        $unit = Unit::factory()->create([
+            'name'         => '8ª SR – São Luís/MA',
+            'street'       => 'Avenida Senador Vitorino Freire',
+            'number'       => 'nº 48',
+            'complement'   => '',
+            'neighborhood' => 'Areinha',
+            'city'         => 'São Luís',
+            'state'        => 'MA',
+            'postal_code'  => '65030015',
+            'phone'        => '(98)3198-1300',
+            'email'        => 'gabinete.ma@codevasf.gov.br',
+        ]);
+
         User::factory()->create([
-            'name'  => 'Test User',
-            'email' => 'test@example.com',
+            'name'    => 'Test User',
+            'email'   => 'test@example.com',
+            'unit_id' => $unit->id,
         ]);
     }
 }

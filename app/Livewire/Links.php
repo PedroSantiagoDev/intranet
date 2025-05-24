@@ -12,7 +12,9 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\{IconColumn, TextColumn};
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
 use Livewire\Attributes\{Layout, Title};
 use Livewire\Component;
@@ -74,9 +76,13 @@ class Links extends Component implements HasForms, HasTable
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('name')
-                    ->label('Nome'),
+                    ->label('Nome')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('url')
-                    ->label('URL'),
+                    ->label('URL')
+                    ->searchable()
+                    ->sortable(),
                 IconColumn::make('icon')
                     ->label('Ícone')
                     ->icon(fn (UserLink $record): string => "heroicon-o-{$record->icon}")
@@ -85,7 +91,12 @@ class Links extends Component implements HasForms, HasTable
                     ->label('Ativo'),
             ])
             ->filters([
-                //
+                Filter::make('is_active')
+                    ->label('Links ativos')
+                    ->query(fn (Builder $query) => $query->where('is_active', true)),
+                Filter::make('is_not_active')
+                    ->label('Links não ativos')
+                    ->query(fn (Builder $query) => $query->where('is_active', false)),
             ])
             ->actions([
                 Action::make('edit')

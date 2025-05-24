@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Auth;
 
-use App\Models\User;
+use App\Models\{Unit, User};
 use Filament\Forms\{ComponentContainer,Form};
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\{Select, TextInput};
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Illuminate\Auth\Events\Registered;
@@ -46,6 +46,12 @@ class Register extends Component implements HasForms
                     ->placeholder('email@example.com')
                     ->required()
                     ->unique(User::class),
+                Select::make('unit_id')
+                    ->label('Unidade')
+                    ->options(Unit::pluck('name', 'id'))
+                    ->required()
+                    ->searchable()
+                    ->extraAttributes(['class' => 'text-left']),
                 TextInput::make('password')
                     ->label(__('Password'))
                     ->password()
