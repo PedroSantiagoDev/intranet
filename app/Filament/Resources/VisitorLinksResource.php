@@ -2,22 +2,22 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UnitLinkResource\{Pages};
-use App\Models\UnitLink;
-use Filament\Forms\Components\{Hidden, Select, TextInput, Toggle, View};
+use App\Filament\Resources\VisitorLinksResource\{Pages};
+use App\Models\VisitorLinks;
+use Filament\Forms\Components\{Select, TextInput, Toggle, View};
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\{IconColumn, TextColumn};
 use Filament\Tables\Table;
 use Filament\{Tables};
 
-class UnitLinkResource extends Resource
+class VisitorLinksResource extends Resource
 {
-    protected static ?string $model = UnitLink::class;
+    protected static ?string $model = VisitorLinks::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-link';
 
-    protected static ?string $label = 'links da unidade';
+    protected static ?string $label = 'links de Visitantes';
 
     protected static ?string $navigationGroup = 'Links';
 
@@ -26,10 +26,10 @@ class UnitLinkResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
-                    ->label('Nome')
-                    ->autofocus()
-                    ->maxLength(255)
-                    ->required(),
+                   ->label('Nome')
+                   ->autofocus()
+                   ->maxLength(255)
+                   ->required(),
                 TextInput::make('url')
                     ->label('Url')
                     ->maxLength(255)
@@ -50,10 +50,6 @@ class UnitLinkResource extends Resource
                     ->label('Ativo?')
                     ->inline()
                     ->default(true),
-                Hidden::make('user_id')
-                    ->default(auth()->id()),
-                Hidden::make('unit_id')
-                    ->default(auth()->user()->unit_id),
             ])->columns(1);
     }
 
@@ -62,16 +58,16 @@ class UnitLinkResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
-                   ->label('Nome')
-                   ->searchable()
-                   ->sortable(),
+                  ->label('Nome')
+                  ->searchable()
+                  ->sortable(),
                 TextColumn::make('url')
                     ->label('URL')
                     ->searchable()
                     ->sortable(),
                 IconColumn::make('icon')
                     ->label('Ícone')
-                    ->icon(fn (UnitLink $record): string => "heroicon-o-{$record->icon}")
+                    ->icon(fn (VisitorLinks $record): string => "heroicon-o-{$record->icon}")
                     ->color('primary'),
                 IconColumn::make('is_active')
                     ->label('Ativo')
@@ -95,7 +91,7 @@ class UnitLinkResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageUnitLinks::route('/'),
+            'index' => Pages\ManageVisitorLinks::route('/'),
         ];
     }
 }
