@@ -25,7 +25,7 @@
             <div class="flex justify-between items-center">
                 <div>
                     <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">Links</h2>
-                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Acesse seus links personalizados para facilitar o seu dia a dia.</p>
+                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Acesse links personalizados para facilitar o seu dia a dia.</p>
                 </div>
             </div>
 
