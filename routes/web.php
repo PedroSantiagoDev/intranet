@@ -17,7 +17,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('links', Links::class)->name('links');
 
-    Route::get('profile', fn () => 'hello profile')->name('profile'); // TODO Implementa a rota adequadamente
+    Route::view('profile', 'profile')->name('profile');
 
     Route::post('logout', App\Livewire\Actions\Logout::class)
         ->name('logout');

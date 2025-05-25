@@ -48,10 +48,12 @@
                             {{ __("Profile") }}
                         </x-dropdown-link>
 
-                        <x-dropdown-link href="/admin" class="flex items-center gap-1">
-                            <x-filament::icon icon="heroicon-m-shield-check" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
-                            Admin
-                        </x-dropdown-link>
+                        @role("admin")
+                            <x-dropdown-link href="/admin" class="flex items-center gap-1">
+                                <x-filament::icon icon="heroicon-m-shield-check" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                                Admin
+                            </x-dropdown-link>
+                        @endrole
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route("logout") }}" class="w-full">

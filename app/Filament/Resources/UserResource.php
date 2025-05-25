@@ -7,11 +7,12 @@ use App\Models\User;
 use Filament\Forms\Components\{Section, Select, TextInput};
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\{BadgeColumn, TextColumn};
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Filament\{Tables};
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserResource extends Resource
 {
@@ -58,6 +59,14 @@ class UserResource extends Resource
                             ->password()
                             ->requiredWith('password')
                             ->maxLength(255),
+                        Select::make('roles')
+                            ->label('Funções')
+                            ->relationship('roles', 'name')
+                            ->options(Role::all()->pluck('name', 'id'))
+                            ->multiple()
+                            ->preload()
+                            ->searchable()
+                            ->required(),
                     ])->columns(2),
             ]);
     }
@@ -78,6 +87,10 @@ class UserResource extends Resource
                     ->label('Unidade')
                     ->searchable()
                     ->sortable(),
+                BadgeColumn::make('roles.name')
+                    ->label('Funções')
+                    ->colors(['primary'])
+                    ->separator(','),
                 TextColumn::make('created_at')
                     ->label('Criado em')
                     ->dateTime('d/m/Y H:i')
@@ -85,10 +98,15 @@ class UserResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('unit_id')
-                ->label('Filtrar por Unidade')
-                ->relationship('unit', 'name')
-                ->searchable()
-                ->preload(),
+                    ->label('Filtrar por Unidade')
+                    ->relationship('unit', 'name')
+                    ->searchable()
+                    ->preload(),
+                SelectFilter::make('roles')
+                    ->label('Filtrar por Função')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

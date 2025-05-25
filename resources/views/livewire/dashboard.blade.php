@@ -59,7 +59,7 @@
                 },
             }"
         >
-            <div class="flex flex-col items-center justify-center m-auto mb-4">
+            <div class="flex flex-col items-center justify-center m-auto mb-5">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">Destaques</h2>
                 <p class="text-sm text-gray-600 dark:text-gray-400">Fique por dentro das últimas notícias e palestras</p>
             </div>

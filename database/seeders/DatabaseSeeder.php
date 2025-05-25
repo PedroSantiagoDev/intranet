@@ -14,6 +14,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
+        $this->call([
+            RolesAndPermissionsSeeder::class,
+        ]);
 
         $unit = Unit::factory()->create([
             'name'         => '8ª SR – São Luís/MA',
@@ -28,10 +31,12 @@ class DatabaseSeeder extends Seeder
             'email'        => 'gabinete.ma@codevasf.gov.br',
         ]);
 
-        User::factory()->create([
-            'name'    => 'Test User',
-            'email'   => 'test@example.com',
+        $admin = User::factory()->create([
+            'name'    => 'Pedro Santiago',
+            'email'   => 'joaopedrosantiago1103@gmail.com',
             'unit_id' => $unit->id,
         ]);
+
+        $admin->assignRole('admin');
     }
 }
