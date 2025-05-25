@@ -1,14 +1,12 @@
 <?php
 
 use App\Livewire\Auth\{Login, Register};
-use App\Livewire\{Dashboard, Links};
+use App\Livewire\{Dashboard, Home, Links};
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
-
 Route::middleware('guest')->group(function () {
+    Route::get('/', Home::class)->name('home');
+
     Route::get('login', Login::class)->name('login');
     Route::get('register', Register::class)->name('register');
 

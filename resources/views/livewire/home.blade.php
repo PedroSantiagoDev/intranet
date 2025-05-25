@@ -4,13 +4,13 @@
         <div class="p-2 sm:p-4 bg-white dark:bg-gray-900 shadow sm:rounded-lg">
             <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Sistemas</h2>
 
-            @if ($unitLinks->isEmpty())
+            @if ($visitorLinksHeader->isEmpty())
                 <div class="flex items-center justify-center h-40 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800">
-                    <p class="text-gray-500 dark:text-gray-400 text-center">No momento, sua unidade não possui links ativos disponíveis.</p>
+                    <p class="text-gray-500 dark:text-gray-400 text-center">No momento, sua unidade não possui links ativos. Confira novamente mais tarde.</p>
                 </div>
             @else
                 <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-6">
-                    @foreach ($unitLinks as $link)
+                    @foreach ($visitorLinksHeader as $link)
                         <x-header-link :title="$link->name" :url="$link->url" :icon="$link->icon" />
                     @endforeach
                 </div>
@@ -24,20 +24,19 @@
         <div class="space-y-4">
             <div class="flex justify-between items-center">
                 <div>
-                    <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">Seus Links</h2>
-                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Gerencie seus links personalizados para acesso rápido.</p>
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">Links</h2>
+                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Acesse seus links personalizados para facilitar o seu dia a dia.</p>
                 </div>
-                <x-filament::button color="gray" href="/links" tag="a" icon="heroicon-m-pencil-square" tooltip="Edite os seus links">Editar</x-filament::button>
             </div>
 
             <div>
-                @if ($userLinks->isEmpty())
+                @if ($visitorLinks->isEmpty())
                     <div class="flex items-center justify-center h-40 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800">
-                        <p class="text-gray-500 dark:text-gray-400 text-center">Você ainda não adicionou links personalizados. Que tal criar alguns para facilitar seu acesso?</p>
+                        <p class="text-gray-500 dark:text-gray-400 text-center">Você ainda não possui links personalizados ativos. Crie ou solicite o seu!</p>
                     </div>
                 @else
                     <div class="space-y-2 h-[500px] p-3 overflow-y-auto rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-md">
-                        @foreach ($userLinks as $link)
+                        @foreach ($visitorLinks as $link)
                             <x-user-link :title="$link->name" :url="$link->url" :icon="$link->icon" />
                         @endforeach
                     </div>
@@ -61,12 +60,12 @@
         >
             <div class="flex flex-col items-center justify-center m-auto mb-4">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">Destaques</h2>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Fique por dentro das últimas notícias e palestras</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Fique por dentro das últimas notícias e eventos importantes</p>
             </div>
 
             <template x-if="slides.length === 0">
                 <div class="flex items-center justify-center h-40 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800">
-                    <p class="text-gray-500 dark:text-gray-400 text-center">Nenhum destaque disponível no momento. Volte mais tarde para novidades!</p>
+                    <p class="text-gray-500 dark:text-gray-400 text-center">Ainda não há notícias ou palestras disponíveis. Volte em breve!</p>
                 </div>
             </template>
 

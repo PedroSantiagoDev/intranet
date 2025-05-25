@@ -56,10 +56,12 @@
                         <!-- Authentication -->
                         <form method="POST" action="{{ route("logout") }}" class="w-full">
                             @csrf
-                            <x-dropdown-link class="flex items-center gap-1">
-                                <x-filament::icon icon="heroicon-m-power" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
-                                {{ __("Log Out") }}
-                            </x-dropdown-link>
+                            <button type="submit" class="w-full text-start">
+                                <x-dropdown-link class="flex items-center gap-1">
+                                    <x-filament::icon icon="heroicon-m-power" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                                    {{ __("Log Out") }}
+                                </x-dropdown-link>
+                            </button>
                         </form>
                     </x-slot>
                 </x-dropdown>
@@ -95,7 +97,7 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                 {{ __("Dashboard") }}
@@ -119,12 +121,15 @@
                     {{ __("Profile") }}
                 </x-responsive-nav-link>
 
-                <!-- Authentication -->
-                <button wire:click="logout" class="w-full text-start">
-                    <x-responsive-nav-link>
-                        {{ __("Log Out") }}
-                    </x-responsive-nav-link>
-                </button>
+                <!-- Logout -->
+                <form method="POST" action="{{ route("logout") }}">
+                    @csrf
+                    <button type="submit" class="w-full text-start">
+                        <x-responsive-nav-link>
+                            {{ __("Log Out") }}
+                        </x-responsive-nav-link>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
