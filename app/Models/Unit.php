@@ -39,4 +39,12 @@ class Unit extends Model
     {
         return $this->hasMany(UnitLink::class);
     }
+
+    /**
+     * @return HasMany<News,$this>
+     */
+    public function news(): HasMany
+    {
+        return $this->hasMany(News::class);
+    }
 }

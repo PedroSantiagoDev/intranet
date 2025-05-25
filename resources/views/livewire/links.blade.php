@@ -15,7 +15,7 @@
 
                 <div class="space-x-2">
                     <x-filament::button type="submit">{{ $editingLink ? "Salvar alterações" : "Criar" }}</x-filament::button>
-                    <x-filament::button outlined wire:click="$dispatch('close-modal', { id: 'create-edit-link' })">Cancelar</x-filament::button>
+                    <x-filament::button color="gray" wire:click="$dispatch('close-modal', { id: 'create-edit-link' })">Cancelar</x-filament::button>
                 </div>
             </form>
         </x-filament::modal>

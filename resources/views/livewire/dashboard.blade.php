@@ -18,7 +18,7 @@
 
                     <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Seus links pessoais</p>
                 </div>
-                <x-filament::button outlined href="/links" tag="a" icon="heroicon-m-pencil-square" tooltip="Edite os seus links">Editar</x-filament::button>
+                <x-filament::button color="gray" href="/links" tag="a" icon="heroicon-m-pencil-square" tooltip="Edite os seus links">Editar</x-filament::button>
             </div>
 
             <div class="max-h-[500px] p-3 overflow-y-auto rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-md">

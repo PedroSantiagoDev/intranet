@@ -64,4 +64,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Unit::class);
     }
+
+    /**
+     * @return HasMany<News,$this>
+     */
+    public function news(): HasMany
+    {
+        return $this->hasMany(News::class);
+    }
 }
