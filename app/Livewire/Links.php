@@ -128,6 +128,8 @@ class Links extends Component implements HasForms, HasTable
 
     public function edit(UserLink $userLink): void
     {
+        $this->authorize('update', $userLink);
+
         $this->data = $userLink->attributesToArray();
         $this->dispatch('open-modal', id: 'create-edit-link');
         $this->editingLink = $userLink;
@@ -135,6 +137,8 @@ class Links extends Component implements HasForms, HasTable
 
     public function update(): void
     {
+        $this->authorize('update', $this->editingLink);
+
         $this->editingLink->update($this->form->getState());
 
         $this->form->fill();
@@ -149,6 +153,8 @@ class Links extends Component implements HasForms, HasTable
 
     public function destroy(UserLink $userLink): void
     {
+        $this->authorize('delete', $this->editingLink);
+
         $userLink->delete();
 
         Notification::make()

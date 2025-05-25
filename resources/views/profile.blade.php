@@ -1,5 +1,5 @@
 <x-layouts.app>
-    <h2 class="font-semibold text-xl text-white leading-tight">
+    <h2 class="font-bold text-xl text-white leading-tight">
         {{ __("Profile") }}
     </h2>
 
