@@ -40,13 +40,8 @@ class RolesAndPermissionsSeeder extends Seeder
         Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web'])
             ->givePermissionTo(Permission::all());
 
-        // Função Editor: Permissões de User + Edição de imagens
-        $editorPermissions = array_merge(
-            $this->getModulePermissions(['links', 'news']),
-        );
-
         Role::firstOrCreate(['name' => 'editor', 'guard_name' => 'web'])
-            ->givePermissionTo($editorPermissions);
+            ->givePermissionTo($this->getModulePermissions(['links', 'news']));
 
         // Função User: Links e Reservas
         Role::firstOrCreate(['name' => 'user', 'guard_name' => 'web'])

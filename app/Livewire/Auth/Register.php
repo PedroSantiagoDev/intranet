@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Auth;
 
-use App\Models\{Unit, User};
+use App\Models\{Unit, User, UserLink, VisitorLinks};
 use Filament\Forms\{ComponentContainer,Form};
 use Filament\Forms\Components\{Select, TextInput};
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -76,9 +76,25 @@ class Register extends Component implements HasForms
 
         $validated['password'] = Hash::make($validated['password']);
 
-        event(new Registered(($user = User::create($validated))));
+        $user = User::create($validated);
+
+        event(new Registered($user));
 
         Auth::login($user);
+
+        $links = VisitorLinks::all();
+
+        if ($links->isNotEmpty()) {
+            foreach ($links as $link) {
+                UserLink::create([
+                    'user_id'   => $user->id,
+                    'name'      => $link->name,
+                    'url'       => $link->url,
+                    'icon'      => $link->icon,
+                    'is_active' => true,
+                ]);
+            }
+        }
 
         $this->redirectIntended(route('dashboard', absolute: false), navigate: true);
     }

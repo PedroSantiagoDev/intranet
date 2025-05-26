@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Actions\Logout;
 use App\Livewire\Auth\{Login, Register};
 use App\Livewire\{Dashboard, Home, Links};
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,6 @@ Route::middleware('auth')->group(function () {
 
     Route::view('profile', 'profile')->name('profile');
 
-    Route::post('logout', App\Livewire\Actions\Logout::class)
+    Route::post('logout', Logout::class)
         ->name('logout');
 });

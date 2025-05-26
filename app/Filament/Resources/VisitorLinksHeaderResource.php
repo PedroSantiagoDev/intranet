@@ -17,7 +17,7 @@ class VisitorLinksHeaderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-link';
 
-    protected static ?string $label = 'links de Visitantes Fixo';
+    protected static ?string $label = 'Links dos Visitantes';
 
     protected static ?string $navigationGroup = 'Links';
 

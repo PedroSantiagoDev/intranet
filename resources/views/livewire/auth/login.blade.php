@@ -6,6 +6,14 @@
     <form wire:submit="login" class="flex flex-col gap-6">
         {{ $this->form }}
 
+        @if ($errors->any())
+            <div class="text-sm text-red-600 space-y-1">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
+
         <div class="flex items-center justify-end">
             <x-filament::button type="submit" class="w-full">
                 {{ __("Log in") }}
