@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'city'         => 'São Luís',
             'state'        => 'MA',
             'postal_code'  => '65030015',
-            'phone'        => '(98)3198-1300',
+            'phone'        => '9831981300',
             'email'        => 'gabinete.ma@codevasf.gov.br',
         ]);
 
