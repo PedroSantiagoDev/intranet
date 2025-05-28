@@ -2,7 +2,7 @@
     {{-- Seção de Links da Unidade --}}
     <section>
         <div class="p-2 sm:p-4 bg-white dark:bg-gray-900 shadow sm:rounded-lg">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Sistemas</h2>
+            <!-- <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Sistemas</h2> -->
 
             @if ($unitLinks->isEmpty())
                 <div class="flex items-center justify-center h-40 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800">
@@ -24,7 +24,7 @@
         <div class="space-y-4">
             <div class="flex justify-between items-center">
                 <div>
-                    <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">Seus Links</h2>
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">Meus Favoritos</h2>
                     <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Gerencie seus links personalizados para acesso rápido.</p>
                 </div>
                 <x-filament::button color="gray" href="/links" tag="a" icon="heroicon-m-pencil-square" tooltip="Edite os seus links">Editar</x-filament::button>
