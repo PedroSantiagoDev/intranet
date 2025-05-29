@@ -54,7 +54,7 @@
                     if (this.slides && this.slides.length > 0) {
                         setInterval(() => {
                             this.activeSlide = (this.activeSlide + 1) % this.slides.length
-                        }, 8000)
+                        }, 10000)
                     }
                 },
             }"

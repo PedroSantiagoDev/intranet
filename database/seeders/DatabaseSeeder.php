@@ -38,5 +38,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $admin->assignRole('admin');
+
+        $admin2 = User::factory()->create([
+            'name'    => 'Carlos Victor',
+            'email'   => 'carlos.anjos@codevasf.gov.br',
+            'unit_id' => $unit->id,
+        ]);
+
+        $admin2->assignRole('admin');        
     }
 }
