@@ -48,7 +48,10 @@ class Register extends Component implements HasForms
                     ->unique(User::class),
                 Select::make('unit_id')
                     ->label('Unidade')
-                    ->options(Unit::pluck('name', 'id'))
+                    ->options(
+                        Unit::orderByRaw("CAST(SUBSTRING_INDEX(name, 'ª', 1) AS UNSIGNED)")
+                            ->pluck('name', 'id')
+                    )
                     ->required()
                     ->searchable()
                     ->extraAttributes(['class' => 'text-left']),

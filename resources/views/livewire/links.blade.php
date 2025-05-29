@@ -1,6 +1,6 @@
 <div class="space-y-6">
     <div class="flex items-center justify-between">
-        <h2 class="text-xl font-bold text-gray-800 dark:text-white">Seus Links</h2>
+        <h2 class="text-xl font-bold text-gray-800 dark:text-white">Meus Favoritos</h2>
 
         <div class="space-x-2">
             <x-filament::modal id="create-edit-link" width="lg" :close-by-clicking-away="false">
