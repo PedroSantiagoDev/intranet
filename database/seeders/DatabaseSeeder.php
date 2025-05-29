@@ -45,6 +45,6 @@ class DatabaseSeeder extends Seeder
             'unit_id' => $unit->id,
         ]);
 
-        $admin2->assignRole('admin');        
+        $admin2->assignRole('admin');
     }
 }
