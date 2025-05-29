@@ -12,6 +12,6 @@
             icon="heroicon-m-{{ $icon }}"
             class="h-8 w-8 text-blue-500 dark:text-blue-400 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors"
         />
-        <h2 class="group-hover:scale-110 transition-transform">{{ $title }}</h2>
+        <h2 class="whitespace-nowrap group-hover:scale-110 transition-transform">{{ $title }}</h2>
     </div>
 </a>
