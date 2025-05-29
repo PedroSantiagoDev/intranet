@@ -4,7 +4,7 @@
             <!-- Logo -->
             <div class="flex items-center">
                 <a href="{{ route("home") }}">
-                    <span class="flex w-36 items-center justify-center rounded-md">
+                    <span class="flex w-44 items-center justify-center rounded-md">
                         <x-app-logo />
                     </span>
                 </a>

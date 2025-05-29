@@ -104,6 +104,8 @@ class Links extends Component implements HasForms, HasTable
                     ->action(fn (UserLink $record) => $this->edit($record)),
                 Action::make('delete')
                     ->requiresConfirmation()
+                    ->modalHeading('Confirmar exclusão') // Altera o título do pop-up
+                    ->modalDescription('Tem certeza que deseja excluir este link?')
                     ->color('danger')
                     ->icon('heroicon-m-trash')
                     ->action(fn (UserLink $record) => $this->destroy($record)),
@@ -153,7 +155,7 @@ class Links extends Component implements HasForms, HasTable
 
     public function destroy(UserLink $userLink): void
     {
-        $this->authorize('delete', $this->editingLink);
+        $this->authorize('delete', $userLink);
 
         $userLink->delete();
 

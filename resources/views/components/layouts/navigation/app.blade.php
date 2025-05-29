@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route("dashboard") }}" wire:navigate>
-                        <span class="flex w-36 items-center justify-center rounded-md">
+                        <span class="flex w-44 items-center justify-center rounded-md">
                             <x-app-logo />
                         </span>
                     </a>
@@ -15,8 +15,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate class="flex items-center gap-2">
-                        <x-filament::icon icon="heroicon-m-home" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
-                        Sistemas
+                        <x-filament::icon icon="heroicon-m-home" class="h-5 w-5 text-gray-500 dark:text-gray-400" />                        
                     </x-nav-link>
                 </div>
             </div>
