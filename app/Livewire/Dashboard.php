@@ -10,7 +10,7 @@ use Livewire\Attributes\{Layout, Title};
 use Livewire\Component;
 
 #[Layout('components.layouts.app')]
-#[Title('Dashboard')]
+#[Title('Início')]
 class Dashboard extends Component
 {
     /** @var Collection<int, UnitLink> */
