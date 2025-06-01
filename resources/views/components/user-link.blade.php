@@ -6,7 +6,7 @@
 
 <a href="{{ $url }}" class="block" target="_blank">
     <div
-        class="flex items-center gap-3 p-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-sm text-gray-700 dark:text-gray-300 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 group"
+        class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-sm text-gray-700 dark:text-gray-300 shadow-sm hover:bg-white dark:hover:bg-gray-700 transition-all duration-200 group"
     >
         <x-filament::icon
             icon="heroicon-m-{{ $icon }}"
