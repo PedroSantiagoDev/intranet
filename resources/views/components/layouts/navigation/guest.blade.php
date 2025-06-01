@@ -12,7 +12,10 @@
 
             <!-- Auth Navigation -->
             @if (Route::has("login"))
-                <nav class="flex items-center justify-end gap-4">
+                <nav class="flex items-center justify-end gap-2">
+                    <!-- Theme Switch -->
+                    <livewire:theme-switch />
+
                     @auth
                         <a
                             href="{{ url("/dashboard") }}"
