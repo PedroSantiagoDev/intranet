@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -15,13 +15,17 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate class="flex items-center gap-2">
-                        <x-filament::icon icon="heroicon-m-home" class="h-5 w-5 text-gray-500 dark:text-gray-400" />                        
+                        <x-filament::icon icon="heroicon-m-home" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
                     </x-nav-link>
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-3">
+                <!-- Theme Switch -->
+                <livewire:theme-switch />
+
+                <!-- User Dropdown -->
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
@@ -124,6 +128,19 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                <!-- Theme Switch Mobile -->
+                <div class="px-4 py-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-base font-medium text-gray-700 dark:text-gray-200 flex items-center gap-2">
+                            <x-filament::icon icon="heroicon-m-swatch" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                            {{ __("Tema") }}
+                        </span>
+                        <div class="scale-90">
+                            <livewire:theme-switch />
+                        </div>
+                    </div>
+                </div>
+
                 @role("admin")
                     <x-responsive-nav-link
                         href="/admin"
