@@ -1,7 +1,7 @@
 <div class="space-y-4">
     {{-- Seção de Links da Unidade --}}
     <section x-data="{ expanded: false }">
-        <div class="p-2 sm:p-4 bg-white dark:bg-gray-900 shadow sm:rounded-lg">
+        <div class="p-2 sm:p-3 bg-white dark:bg-gray-900 shadow sm:rounded-lg">
             @if ($unitLinks->isEmpty())
                 <div class="flex items-center justify-center h-40 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800">
                     <p class="text-gray-500 dark:text-gray-400 text-center">No momento, sua unidade não possui links ativos disponíveis.</p>
@@ -16,12 +16,12 @@
                 </div>
 
                 @if ($unitLinks->count() > 6)
-                    <div class="mt-2 text-center">
-                        <button @click="expanded = !expanded" class="group relative h-8 w-8">
+                    <div class="mt-1 flex justify-center">
+                        <button @click="expanded = !expanded" class="absolute">
                             <span x-show="!expanded" x-transition>
                                 <x-filament::icon
                                     icon="heroicon-m-arrow-down"
-                                    class="absolute inset-0 h-6 w-6 text-blue-500 dark:text-blue-400 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors"
+                                    class="h-6 w-9 rounded-full bg-white dark:bg-gray-900 text-blue-500 dark:text-blue-400 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors"
                                     title="Expandir"
                                 />
                             </span>
@@ -29,7 +29,7 @@
                             <span x-show="expanded" x-transition>
                                 <x-filament::icon
                                     icon="heroicon-m-arrow-up"
-                                    class="absolute inset-0 h-6 w-6 text-blue-500 dark:text-blue-400 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors"
+                                    class="h-6 w-9 rounded-full bg-white dark:bg-gray-900 text-blue-500 dark:text-blue-400 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors"
                                     title="Recolher"
                                 />
                             </span>
