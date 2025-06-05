@@ -22,6 +22,7 @@
                                 <x-filament::icon
                                     icon="heroicon-m-arrow-down"
                                     class="absolute inset-0 h-6 w-6 text-blue-500 dark:text-blue-400 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors"
+                                    title="Expandir"
                                 />
                             </span>
 
@@ -29,6 +30,7 @@
                                 <x-filament::icon
                                     icon="heroicon-m-arrow-up"
                                     class="absolute inset-0 h-6 w-6 text-blue-500 dark:text-blue-400 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors"
+                                    title="Recolher"
                                 />
                             </span>
                         </button>
