@@ -1,19 +1,39 @@
 <div class="space-y-4">
     {{-- Seção de Links da Unidade --}}
-    <section>
+    <section x-data="{ expanded: false }">
         <div class="p-2 sm:p-4 bg-white dark:bg-gray-900 shadow sm:rounded-lg">
-            <!-- <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Sistemas</h2> -->
-
             @if ($unitLinks->isEmpty())
                 <div class="flex items-center justify-center h-40 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800">
                     <p class="text-gray-500 dark:text-gray-400 text-center">No momento, sua unidade não possui links ativos disponíveis.</p>
                 </div>
             @else
                 <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-6">
-                    @foreach ($unitLinks as $link)
-                        <x-header-link :title="$link->name" :url="$link->url" :icon="$link->icon" />
+                    @foreach ($unitLinks as $index => $link)
+                        <div x-show="expanded || {{ $index }} < 6" x-transition>
+                            <x-header-link :title="$link->name" :url="$link->url" :icon="$link->icon" />
+                        </div>
                     @endforeach
                 </div>
+
+                @if ($unitLinks->count() > 6)
+                    <div class="mt-2 text-center">
+                        <button @click="expanded = !expanded" class="group relative h-8 w-8">
+                            <span x-show="!expanded" x-transition>
+                                <x-filament::icon
+                                    icon="heroicon-m-arrow-down"
+                                    class="absolute inset-0 h-6 w-6 text-blue-500 dark:text-blue-400 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors"
+                                />
+                            </span>
+
+                            <span x-show="expanded" x-transition>
+                                <x-filament::icon
+                                    icon="heroicon-m-arrow-up"
+                                    class="absolute inset-0 h-6 w-6 text-blue-500 dark:text-blue-400 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors"
+                                />
+                            </span>
+                        </button>
+                    </div>
+                @endif
             @endif
         </div>
     </section>

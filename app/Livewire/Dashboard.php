@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\{News, UnitLink, UserLink};
+use App\Models\{News, UserLink, VisitorLinksHeader};
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -13,7 +13,7 @@ use Livewire\Component;
 #[Title('Início')]
 class Dashboard extends Component
 {
-    /** @var Collection<int, UnitLink> */
+    /** @var Collection<int, VisitorLinksHeader> */
     public Collection $unitLinks;
 
     /** @var Collection<int, UserLink> */
@@ -24,9 +24,7 @@ class Dashboard extends Component
 
     public function mount(): void
     {
-        $this->unitLinks = UnitLink::where('unit_id', auth()->user()->unit_id)
-        ->where('is_active', true)
-        ->get();
+        $this->unitLinks = VisitorLinksHeader::where('is_active', true)->get();
 
         $this->userLinks = auth()->user()->userLinks()
             ->where('is_active', true)
