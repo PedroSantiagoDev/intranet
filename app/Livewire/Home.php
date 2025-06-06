@@ -30,6 +30,7 @@ class Home extends Component
 
         $this->news = News::where('is_active', true)
             ->get()
+            ->orderBy('created_at', 'desc') // Order by News DESC
             ->map(function ($item) {
                 $item->file = $item->file ? Storage::url($item->file) : null;
 

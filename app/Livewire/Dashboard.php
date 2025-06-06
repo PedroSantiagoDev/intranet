@@ -32,6 +32,7 @@ class Dashboard extends Component
 
         $this->news = News::where('unit_id', auth()->user()->unit_id)
             ->where('is_active', true)
+            ->orderBy('created_at', 'desc') // Order by News DESC
             ->get()
             ->map(function ($item) {
                 $item->file = $item->file ? Storage::url($item->file) : null;
