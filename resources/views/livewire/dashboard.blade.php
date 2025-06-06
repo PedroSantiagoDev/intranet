@@ -43,7 +43,7 @@
     {{-- Seção de Links Pessoais e Notícias --}}
     <section class="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {{-- Links Pessoais --}}
-        <div class="space-y-4">
+        <div class="space-y-4 mt-4">
             <div class="flex justify-between items-center">
                 <div>
                     <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">Meus Favoritos</h2>
@@ -58,7 +58,7 @@
                         <p class="text-gray-500 dark:text-gray-400 text-center">Você ainda não adicionou links personalizados. Que tal criar alguns para facilitar seu acesso?</p>
                     </div>
                 @else
-                    <div class="space-y-2 h-[500px] p-3 overflow-y-auto rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-md">
+                    <div class="h-[425px] space-y-2 p-3 overflow-y-auto rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-md"> {{--  style="height: 425px;" --}}
                         @foreach ($userLinks as $link)
                             <x-user-link :title="$link->name" :url="$link->url" :icon="$link->icon" />
                         @endforeach
@@ -68,7 +68,7 @@
         </div>
 
         {{-- Notícias (Carrossel) --}}
-        <div
+        <div class="mt-4"
             x-data="{
                 activeSlide: 0,
                 slides: {{ $news }},
@@ -81,10 +81,10 @@
                 },
             }"
         >
-            <div class="flex flex-col items-center justify-center m-auto mb-5">
+            {{-- <div class="flex flex-col items-center justify-center m-auto mb-5">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">Destaques</h2>
                 <p class="text-sm text-gray-600 dark:text-gray-400">Fique por dentro das últimas notícias e palestras</p>
-            </div>
+            </div> --}}
 
             <template x-if="slides.length === 0">
                 <div class="flex items-center justify-center h-40 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800">
