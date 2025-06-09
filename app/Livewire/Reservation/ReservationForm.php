@@ -97,7 +97,7 @@ class ReservationForm extends Component implements HasForms
 
                 Section::make('Informações Adicionais')
                     ->schema([
-                        Grid::make(3)
+                        Grid::make(4)
                             ->schema([
                                 TextInput::make('subject')
                                     ->label('Assunto')
@@ -117,6 +117,16 @@ class ReservationForm extends Component implements HasForms
                                     ->label('Necessita equipamentos de TI?')
                                     ->default(false)
                                     ->inline(false),
+                                $this->reservation
+                                    ? Select::make('status')
+                                        ->label('Status da Reserva')
+                                        ->options([
+                                            'RESERVADO' => 'Reservado',
+                                            'CONCLUIDO' => 'Concluído',
+                                            'CANCELADO' => 'Cancelado',
+                                        ])
+                                        ->required()
+                                    : Hidden::make('status'),
                             ]),
                         Textarea::make('observation')
                             ->label('Observações')
@@ -124,16 +134,6 @@ class ReservationForm extends Component implements HasForms
                             ->rows(3)
                             ->columnSpanFull()
                             ->nullable(),
-                        $this->reservation
-                            ? Select::make('status')
-                                ->label('Status da Reserva')
-                                ->options([
-                                    'RESERVADO' => 'Reservado',
-                                    'CONCLUIDO' => 'Concluído',
-                                    'CANCELADO' => 'Cancelado',
-                                ])
-                                ->required()
-                            : Hidden::make('status'),
                     ]),
                 Hidden::make('user_id'),
                 Hidden::make('unit_id'),
