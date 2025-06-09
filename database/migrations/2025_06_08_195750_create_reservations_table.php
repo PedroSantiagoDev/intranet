@@ -18,6 +18,7 @@ return new class () extends Migration {
             $table->time('start_time');
             $table->time('end_time');
             $table->string('event_link')->nullable();
+            $table->string('subject');
             $table->text('observation')->nullable();
             $table->string('status');
             $table->boolean('ti_equipment');

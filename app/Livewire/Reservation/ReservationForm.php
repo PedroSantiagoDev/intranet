@@ -41,13 +41,14 @@ class ReservationForm extends Component implements HasForms
                 'event_link'   => $this->reservation->event_link,
                 'ti_equipment' => $this->reservation->ti_equipment,
                 'observation'  => $this->reservation->observation,
+                'subject'      => $this->reservation->subject,
                 'status'       => $this->reservation->status,
                 'user_id'      => $this->reservation->user_id,
                 'unit_id'      => $this->reservation->unit_id,
             ]);
         } else {
             $this->form->fill([
-                'status'  => 'pendente',
+                'status'  => 'RESERVADO',
                 'user_id' => Auth::id(),
                 'unit_id' => Auth::user()->unit_id,
             ]);
@@ -96,8 +97,12 @@ class ReservationForm extends Component implements HasForms
 
                 Section::make('Informações Adicionais')
                     ->schema([
-                        Grid::make(2)
+                        Grid::make(3)
                             ->schema([
+                                TextInput::make('subject')
+                                    ->label('Assunto')
+                                    ->maxLength(255)
+                                    ->required(),
                                 TextInput::make('event_link')
                                     ->label('Link da Reunião')
                                     ->url()
@@ -123,12 +128,11 @@ class ReservationForm extends Component implements HasForms
                             ? Select::make('status')
                                 ->label('Status da Reserva')
                                 ->options([
-                                    'pendente'  => 'Pendente',
-                                    'concluido' => 'Concluído',
-                                    'cancelado' => 'Cancelado',
+                                    'RESERVADO' => 'Reservado',
+                                    'CONCLUIDO' => 'Concluído',
+                                    'CANCELADO' => 'Cancelado',
                                 ])
                                 ->required()
-                                ->columnSpanFull()
                             : Hidden::make('status'),
                     ]),
                 Hidden::make('user_id'),

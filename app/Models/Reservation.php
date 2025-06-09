@@ -14,6 +14,7 @@ class Reservation extends Model
         'start_time',
         'end_time',
         'event_link',
+        'subject',
         'observation',
         'status',
         'ti_equipment',

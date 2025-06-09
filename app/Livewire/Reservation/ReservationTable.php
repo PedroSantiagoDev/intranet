@@ -10,7 +10,8 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\{IconColumn, TextColumn};
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
-use Filament\Tables\Filters\Filter;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\{Filter, SelectFilter};
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
@@ -29,14 +30,10 @@ class ReservationTable extends Component implements HasForms, HasTable
         return $table
             ->query(
                 Reservation::query()
-                    -> with('user')
+                    ->with('user')
                     ->orderByRaw('(date < CURDATE()) ASC, date ASC')
             )
             ->columns([
-                TextColumn::make('user.name')
-                    ->label('Responsável')
-                    ->searchable()
-                    ->sortable(),
                 TextColumn::make('date')
                     ->label('Data')
                     ->date('d/m/Y')
@@ -48,21 +45,42 @@ class ReservationTable extends Component implements HasForms, HasTable
                 TextColumn::make('end_time')
                     ->label('Término')
                     ->time('H:i'),
+                TextColumn::make('subject')
+                    ->label('Assunto')
+                    ->searchable(),
+                TextColumn::make('user.name')
+                    ->label('Responsável')
+                    ->searchable()
+                    ->sortable(),
                 IconColumn::make('ti_equipment')
-                   ->label('Equipamentos da TI?')
+                   ->label('Equip. da TI?')
+                    ->alignCenter()
                    ->boolean(),
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
                     ->colors([
-                        'success' => 'aprovado',
-                        'warning' => 'pendente',
-                        'danger'  => 'cancelado',
+                        'success' => 'RESERVADO',
+                        'primary' => 'CONCLUIDO',
+                        'danger'  => 'CANCELADO',
                     ])
                     ->sortable()
                     ->alignCenter(),
             ])
             ->filters([
+                SelectFilter::make('status')
+                ->options([
+                    'RESERVADO' => 'Reservado',
+                    'CONCLUIDO' => 'Concluído',
+                    'CANCELADO' => 'Cancelado',
+                ])
+                ->default('RESERVADO')
+                ->label('Filtrar por Status')
+                ->query(function (Builder $query, array $data) {
+                    if (!empty($data['value'])) {
+                        $query->where('status', $data['value']);
+                    }
+                }),
                 Filter::make('date')
                     ->form([
                         DatePicker::make('date_filter')
@@ -76,7 +94,7 @@ class ReservationTable extends Component implements HasForms, HasTable
                                 fn (Builder $query, $date) => $query->whereDate('date', $date)
                             );
                     }),
-            ])
+            ], layout: FiltersLayout::AboveContent)
             ->actions([
                 Action::make('edit')
                     ->icon('heroicon-m-pencil-square')
