@@ -65,8 +65,7 @@ class UserResource extends Resource
                             ->options(Role::all()->pluck('name', 'id'))
                             ->multiple()
                             ->preload()
-                            ->searchable()
-                            ->required(),
+                            ->searchable(),
                     ])->columns(2),
             ]);
     }

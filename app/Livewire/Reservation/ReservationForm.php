@@ -117,8 +117,10 @@ class ReservationForm extends Component implements HasForms
                                     ->label('Necessita equipamentos de TI?')
                                     ->default(false)
                                     ->inline(false),
-                                $this->reservation
-                                    ? Select::make('status')
+                                $this->reservation && (
+                                    auth()->user()->hasRole(['admin', 'auditorium']) ||
+                                    auth()->user()->can('change_status auditorium')
+                                ) ? Select::make('status')
                                         ->label('Status da Reserva')
                                         ->options([
                                             'RESERVADO' => 'Reservado',

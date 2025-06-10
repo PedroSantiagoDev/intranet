@@ -98,7 +98,15 @@ class ReservationTable extends Component implements HasForms, HasTable
             ->actions([
                 Action::make('edit')
                     ->icon('heroicon-m-pencil-square')
-                    ->url(fn (Reservation $record) => route('reservations.edit', $record)),
+                    ->url(fn (Reservation $record) => route('reservations.edit', $record))
+                    ->visible(function (Reservation $record) {
+                        $user = auth()->user();
+
+                        return $user->hasRole('admin')
+                            || $user->hasRole('auditorium')
+                            || $user->can('edit auditorium')
+                            || $record->user_id === $user->id;
+                    }),
             ])
             ->bulkActions([
                 //
