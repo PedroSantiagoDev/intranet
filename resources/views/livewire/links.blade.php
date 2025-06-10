@@ -21,7 +21,7 @@
                 </form>
             </x-filament::modal>
 
-            <x-filament::button color="gray" href="{{ route('dashboard') }}" tag="a">Voltar</x-filament::button>
+            <x-filament::button color="gray" href="{{ route('dashboard') }}" tag="a" wire:navigate>Voltar</x-filament::button>
         </div>
     </div>
 

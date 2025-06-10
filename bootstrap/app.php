@@ -10,7 +10,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+            'can.edit.reservation' => \App\Http\Middleware\CanEditReservation::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

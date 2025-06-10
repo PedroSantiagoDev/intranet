@@ -60,7 +60,7 @@
                     <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100">Meus Links Favoritos</h2>
                     <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Acesse rapidamente seus links personalizados</p>
                 </div>
-                <x-filament::button color="gray" href="/links" tag="a" icon="heroicon-m-pencil-square" class="shrink-0 text-xs">Editar</x-filament::button>
+                <x-filament::button color="gray" href="/links" tag="a" icon="heroicon-m-pencil-square" class="shrink-0 text-xs" wire:navigate>Editar</x-filament::button>
             </div>
 
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700">
