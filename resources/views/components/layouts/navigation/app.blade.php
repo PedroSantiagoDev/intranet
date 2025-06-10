@@ -17,6 +17,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate class="flex items-center gap-2">
                         <x-filament::icon icon="heroicon-m-home" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
                     </x-nav-link>
+                    <x-nav-link :href="route('reservations.index')" :active="request()->routeIs('reservations.index')" wire:navigate class="flex items-center gap-2">
+                        Reservas
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -112,6 +115,15 @@
             >
                 <x-filament::icon icon="heroicon-m-home" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
                 Inicio
+            </x-responsive-nav-link>
+            <x-responsive-nav-link
+                :href="route('reservations.index')"
+                :active="request()->routeIs('reservations.index')"
+                wire:navigate
+                class="flex items-center gap-2 px-4 py-3 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+            >
+                <x-filament::icon icon="heroicon-m-video-camera" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                Reservas
             </x-responsive-nav-link>
         </div>
 

@@ -18,15 +18,15 @@ Route::middleware('auth')->group(function () {
 
     Route::get('links', Links::class)->name('links');
 
+    Route::get('reservation', ReservationTable::class)
+        ->name('reservations.index');
+
     Route::get('reservation/create', ReservationForm::class)
         ->name('reservations.create');
 
     Route::get('reservation/{reservation}/edit', ReservationForm::class)
         ->name('reservations.edit')
         ->middleware('can.edit.reservation');
-
-    Route::get('reservation', ReservationTable::class)
-        ->name('reservations.index');
 
     Route::view('profile', 'profile')->name('profile');
 
