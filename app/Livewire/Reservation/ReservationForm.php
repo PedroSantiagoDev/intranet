@@ -66,7 +66,7 @@ class ReservationForm extends Component implements HasForms
                                 DatePicker::make('date')
                                     ->label('Data da Reserva')
                                     ->required()
-                                    ->minDate(now()->startOfDay())
+                                    ->minDate(today())
                                     ->rules(['required', 'date', 'after_or_equal:today'])
                                     ->validationMessages([
                                         'after_or_equal' => 'A data não pode ser anterior a hoje',
