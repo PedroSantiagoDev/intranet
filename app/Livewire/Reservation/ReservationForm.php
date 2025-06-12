@@ -75,7 +75,6 @@ class ReservationForm extends Component implements HasForms
                                     ->label('Hora de Início')
                                     ->required()
                                     ->seconds(false)
-                                    ->minutesStep(15)
                                     ->displayFormat('H:i')
                                     ->format('H:i:s')
                                     ->validationMessages([
@@ -85,7 +84,6 @@ class ReservationForm extends Component implements HasForms
                                     ->label('Hora de Término')
                                     ->required()
                                     ->seconds(false)
-                                    ->minutesStep(15)
                                     ->displayFormat('H:i')
                                     ->format('H:i:s')
                                     ->rules(['required', 'after:start_time'])
@@ -210,6 +208,7 @@ class ReservationForm extends Component implements HasForms
     private function checkForOverlaps(array $data, ?Reservation $exclude = null): void
     {
         $query = Reservation::where('date', $data['date'])
+            ->where('status', '!=', 'CANCELADO')
             ->where(function ($q) use ($data) {
                 $q->where(function ($inner) use ($data) {
                     $inner->where('start_time', '<', $data['end_time'])

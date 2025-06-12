@@ -102,10 +102,12 @@ class ReservationTable extends Component implements HasForms, HasTable
                     ->visible(function (Reservation $record) {
                         $user = auth()->user();
 
-                        return $user->hasRole('admin')
+                        return $record->status === 'RESERVADO' && (
+                            $user->hasRole('admin')
                             || $user->hasRole('auditorium')
                             || $user->can('edit auditorium')
-                            || $record->user_id === $user->id;
+                            || $record->user_id === $user->id
+                        );
                     }),
             ])
             ->bulkActions([

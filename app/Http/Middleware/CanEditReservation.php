@@ -33,6 +33,10 @@ class CanEditReservation
 
     private function canEditReservation(User $user, Reservation $reservation): bool
     {
+        if ($reservation->status !== 'RESERVADO') {
+            return false;
+        }
+
         if ($user->hasRole('admin')) {
             return true;
         }
