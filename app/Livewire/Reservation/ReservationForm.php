@@ -57,7 +57,7 @@ class ReservationForm extends Component implements HasForms
 
     public function form(Form $form): Form
     {
-        $isPastDate = $this->reservation && Carbon::parse($this->reservation->date)->isPast();
+        $isPastDate = $this->reservation && Carbon::parse($this->reservation->date)->isBefore(Carbon::today());
 
         return $form
             ->schema([
