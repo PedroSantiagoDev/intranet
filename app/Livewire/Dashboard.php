@@ -28,6 +28,7 @@ class Dashboard extends Component
 
         $this->userLinks = auth()->user()->userLinks()
             ->where('is_active', true)
+            ->orderBy('sort')
             ->get();
 
         $this->news = News::where('unit_id', auth()->user()->unit_id)

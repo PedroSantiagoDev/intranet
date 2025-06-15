@@ -7,4 +7,27 @@
     </div>
 
     {{ $this->table }}
+
+    <script>
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('copyToClipboard', (event) => {
+                const text = event.text;
+
+                const input = document.createElement('textarea');
+                input.value = text;
+                document.body.appendChild(input);
+                input.select();
+
+                try {
+                    navigator.clipboard.writeText(text).then(() => {
+                        console.log('Link copiado com sucesso');
+                    });
+                } catch (err) {
+                    document.execCommand('copy');
+                }
+
+                document.body.removeChild(input);
+            });
+        });
+    </script>
 </div>

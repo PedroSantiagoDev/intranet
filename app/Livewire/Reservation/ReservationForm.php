@@ -57,6 +57,8 @@ class ReservationForm extends Component implements HasForms
 
     public function form(Form $form): Form
     {
+        $isPastDate = $this->reservation && Carbon::parse($this->reservation->date)->isPast();
+
         return $form
             ->schema([
                 Section::make('Detalhes da Reserva')
@@ -66,11 +68,12 @@ class ReservationForm extends Component implements HasForms
                                 DatePicker::make('date')
                                     ->label('Data da Reserva')
                                     ->required()
-                                    ->minDate(today())
-                                    ->rules(['required', 'date', 'after_or_equal:today'])
-                                    ->validationMessages([
+                                    ->minDate($isPastDate ? $this->reservation->date : today())
+                                     ->rules($isPastDate ? [] : ['required', 'date', 'after_or_equal:today'])
+                                    ->validationMessages($isPastDate ? [] : [
                                         'after_or_equal' => 'A data não pode ser anterior a hoje',
-                                    ]),
+                                    ])
+                                    ->disabled($isPastDate),
                                 TimePicker::make('start_time')
                                     ->label('Hora de Início')
                                     ->required()
@@ -79,7 +82,7 @@ class ReservationForm extends Component implements HasForms
                                     ->format('H:i:s')
                                     ->validationMessages([
                                         'required' => 'A hora de início é obrigatória',
-                                    ]),
+                                    ])->disabled($isPastDate),
                                 TimePicker::make('end_time')
                                     ->label('Hora de Término')
                                     ->required()
@@ -89,7 +92,7 @@ class ReservationForm extends Component implements HasForms
                                     ->rules(['required', 'after:start_time'])
                                     ->validationMessages([
                                         'after' => 'O horário de término deve ser após a hora de início',
-                                    ]),
+                                    ])->disabled($isPastDate),
                             ]),
                     ]),
 
@@ -100,21 +103,23 @@ class ReservationForm extends Component implements HasForms
                                 TextInput::make('subject')
                                     ->label('Assunto')
                                     ->maxLength(255)
-                                    ->required(),
+                                    ->required()
+                                    ->disabled($isPastDate),
                                 TextInput::make('event_link')
                                     ->label('Link da Reunião')
                                     ->url()
                                     ->placeholder('https://meet.google.com/...')
-                                    ->maxLength(2048)
                                     ->nullable()
                                     ->validationMessages([
                                         'url' => 'O link deve ser uma URL válida',
                                         'max' => 'O link não pode ter mais que 2048 caracteres',
-                                    ]),
+                                    ])
+                                    ->disabled($isPastDate),
                                 Toggle::make('ti_equipment')
                                     ->label('Necessita equipamentos de TI?')
                                     ->default(false)
-                                    ->inline(false),
+                                    ->inline(false)
+                                    ->disabled($isPastDate),
                                 $this->reservation && (
                                     auth()->user()->hasRole(['admin', 'auditorium']) ||
                                     auth()->user()->can('change_status auditorium')
@@ -126,8 +131,16 @@ class ReservationForm extends Component implements HasForms
                                             'CANCELADO' => 'Cancelado',
                                         ])
                                         ->required()
+                                        ->live()
                                     : Hidden::make('status'),
                             ]),
+                        Textarea::make('cancellation_reason')
+                            ->label('Motivo do Cancelamento')
+                            ->placeholder('Informe o motivo do cancelamento')
+                            ->rows(3)
+                            ->columnSpanFull()
+                            ->required(fn (callable $get) => $get('status') === 'CANCELADO')
+                            ->visible(fn (callable $get) => $get('status') === 'CANCELADO'),
                         Textarea::make('observation')
                             ->label('Observações')
                             ->placeholder('Informe detalhes relevantes sobre a reserva')
@@ -171,11 +184,21 @@ class ReservationForm extends Component implements HasForms
 
     public function update(Reservation $reservation): void
     {
-        $validated = $this->form->validate();
-        $data      = $validated['data'];
+        $validated  = $this->form->validate();
+        $data       = $validated['data'];
+        $isPastDate = Carbon::parse($reservation->date)->isPast();
 
-        $this->validateTimes($data);
-        $this->checkForOverlaps($data, $reservation);
+        if ($isPastDate) {
+            $data['date']         = $reservation->date;
+            $data['start_time']   = $reservation->start_time;
+            $data['end_time']     = $reservation->end_time;
+            $data['subject']      = $reservation->subject;
+            $data['event_link']   = $reservation->event_link;
+            $data['ti_equipment'] = $reservation->ti_equipment;
+        } else {
+            $this->validateTimes($data);
+            $this->checkForOverlaps($data, $reservation);
+        }
 
         $reservation->update($data);
 

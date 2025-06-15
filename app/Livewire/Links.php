@@ -73,7 +73,8 @@ class Links extends Component implements HasForms, HasTable
     {
         return $table
             ->query(UserLink::query()->where('user_id', auth()->id()))
-            ->defaultSort('created_at', 'desc')
+            ->defaultSort('sort', 'asc')
+            ->reorderable('sort')
             ->columns([
                 TextColumn::make('name')
                     ->label('Nome')

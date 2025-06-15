@@ -6,6 +6,7 @@ use App\Models\Reservation;
 use Filament\Forms\Components\{DatePicker};
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\{IconColumn, TextColumn};
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -31,8 +32,8 @@ class ReservationTable extends Component implements HasForms, HasTable
             ->query(
                 Reservation::query()
                     ->with('user')
-                    ->orderByRaw('(date < CURDATE()) ASC, date ASC')
             )
+            ->defaultSort('date', 'asc')
             ->columns([
                 TextColumn::make('date')
                     ->label('Data')
@@ -64,8 +65,16 @@ class ReservationTable extends Component implements HasForms, HasTable
                         'primary' => 'CONCLUIDO',
                         'danger'  => 'CANCELADO',
                     ])
-                    ->sortable()
                     ->alignCenter(),
+                TextColumn::make('cancellation_reason')
+                    ->label('Motivo do Cancelamento')
+                    ->visible(function () {
+                        $user = auth()->user();
+
+                        return $user->hasRole('auditorium') || $user->can('edit auditorium');
+                    })
+                    ->wrap()
+                    ->toggleable(),
             ])
             ->filters([
                 SelectFilter::make('status')
@@ -109,6 +118,21 @@ class ReservationTable extends Component implements HasForms, HasTable
                             || $record->user_id === $user->id
                         );
                     }),
+                Action::make('copyLink')
+                ->icon('heroicon-o-clipboard-document')
+                ->iconButton()
+                ->tooltip('Copiar link da reunião')
+                ->action(function (Reservation $record) {
+                    if (!empty($record->event_link)) {
+                        $this->dispatch('copyToClipboard', text: $record->event_link);
+
+                        Notification::make()
+                            ->title('Link copiado para a área de transferência!')
+                            ->success()
+                            ->send();
+                    }
+                })
+                ->visible(fn (Reservation $record) => !empty($record->event_link)),
             ])
             ->bulkActions([
                 //

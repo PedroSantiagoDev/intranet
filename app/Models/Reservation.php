@@ -18,6 +18,7 @@ class Reservation extends Model
         'observation',
         'status',
         'ti_equipment',
+        'cancellation_reason',
     ];
 
     /**
