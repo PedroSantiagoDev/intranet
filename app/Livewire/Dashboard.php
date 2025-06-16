@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\{News, UserLink, VisitorLinksHeader};
+use App\Models\{News, NewsAlert, UserLink, VisitorLinksHeader};
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -22,6 +22,8 @@ class Dashboard extends Component
     /** @var Collection<int, News> */
     public Collection $news;
 
+    public ?NewsAlert $newsAlert = null;
+
     public function mount(): void
     {
         $this->unitLinks = VisitorLinksHeader::where('is_active', true)->get();
@@ -40,6 +42,10 @@ class Dashboard extends Component
 
                 return $item;
             });
+
+        $this->newsAlert = NewsAlert::where('unit_id', auth()->user()->unit_id)
+            ->where('is_active', true)
+            ->first();
     }
 
     public function render(): View

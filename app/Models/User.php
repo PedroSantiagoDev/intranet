@@ -91,4 +91,12 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(Reservation::class);
     }
+
+    /**
+     * @return HasMany<NewsAlert,$this>
+     */
+    public function newsAlerts(): HasMany
+    {
+        return $this->hasMany(NewsAlert::class);
+    }
 }

@@ -47,4 +47,12 @@ class Unit extends Model
     {
         return $this->hasMany(News::class);
     }
+
+    /**
+     * @return HasMany<NewsAlert,$this>
+     */
+    public function newsAlerts(): HasMany
+    {
+        return $this->hasMany(NewsAlert::class);
+    }
 }

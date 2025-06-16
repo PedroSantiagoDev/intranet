@@ -51,6 +51,12 @@
         </div>
     </section>
 
+    @if ($newsAlert)
+        <section>
+            <x-info-alert :type="$newsAlert->type" :title="$newsAlert->title" :content="$newsAlert->content" />
+        </section>
+    @endif
+
     {{-- Seção de Links Pessoais e Notícias --}}
     <section class="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {{-- Links Pessoais --}}
