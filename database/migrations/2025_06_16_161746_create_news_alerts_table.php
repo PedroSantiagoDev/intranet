@@ -16,6 +16,7 @@ return new class () extends Migration {
             $table->text('content');
             $table->string('type');
             $table->boolean('is_active');
+            $table->boolean('everyone');
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('unit_id')->constrained('units');
             $table->timestamps();

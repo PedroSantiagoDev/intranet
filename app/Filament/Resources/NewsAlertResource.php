@@ -35,7 +35,7 @@ class NewsAlertResource extends Resource
                     ->required()
                     ->placeholder('Digite o conteúdo do alerta'),
                 Select::make('type')
-                    ->label('Titulo')
+                    ->label('Tipo')
                     ->required()
                     ->options([
                         'alert' => 'Alerta',
@@ -51,6 +51,11 @@ class NewsAlertResource extends Resource
                     ->label('Ativo?')
                     ->inline()
                     ->default(true),
+                Toggle::make('everyone')
+                    ->label('Para todos?')
+                    ->inline()
+                    ->default(false)
+                    ->helperText('Se ativado, o alerta será visível para todos os usuários, independentemente da unidade.'),
                 Hidden::make('user_id')
                     ->default(auth()->id()),
             ])->columns(1);
@@ -76,6 +81,9 @@ class NewsAlertResource extends Resource
                     ->sortable(),
                 IconColumn::make('is_active')
                     ->label('Ativa?')
+                    ->boolean(),
+                IconColumn::make('everyone')
+                    ->label('Para todos?')
                     ->boolean(),
                 TextColumn::make('created_at')
                     ->label('Criada em')

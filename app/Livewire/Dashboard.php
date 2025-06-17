@@ -22,7 +22,7 @@ class Dashboard extends Component
     /** @var Collection<int, News> */
     public Collection $news;
 
-    public ?NewsAlert $newsAlert = null;
+    public NewsAlert $newsAlert;
 
     public function mount(): void
     {
@@ -43,8 +43,13 @@ class Dashboard extends Component
                 return $item;
             });
 
-        $this->newsAlert = NewsAlert::where('unit_id', auth()->user()->unit_id)
+        $this->newsAlert = NewsAlert::query()
             ->where('is_active', true)
+            ->where(function ($query) {
+                $query->where('everyone', true)
+                    ->orWhere('unit_id', auth()->user()->unit_id);
+            })
+            ->orderBy('created_at', 'desc')
             ->first();
     }
 

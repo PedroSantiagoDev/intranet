@@ -8,7 +8,7 @@
 @php
     $isAlert = $type === "alert";
 
-    $baseClasses = "flex items-start gap-3 p-4 rounded-lg border";
+    $baseClasses = "flex items-start gap-3 p-4 px-12 rounded-lg border";
 
     $typeClasses = $isAlert
         ? "bg-red-50 dark:bg-red-950/50 border-red-200 dark:border-red-800 text-red-800 dark:text-red-200"
@@ -22,8 +22,6 @@
 @endphp
 
 <div {{ $attributes->merge(["class" => $baseClasses . " " . $typeClasses . " " . $class]) }}>
-    <!-- Ícone usando Heroicons ou similar -->
-
     @if ($isAlert)
         <svg class="h-6 w-6 mt-0.5 flex-shrink-0 {{ $iconClasses }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path

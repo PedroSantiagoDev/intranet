@@ -54,7 +54,7 @@
                         </x-dropdown-link>
 
                         @role("admin")
-                            <x-dropdown-link href="/admin" class="flex items-center gap-2">
+                            <x-dropdown-link href="/admin" target="__blank" class="flex items-center gap-2">
                                 <x-filament::icon icon="heroicon-m-shield-check" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
                                 Admin
                             </x-dropdown-link>
@@ -156,6 +156,7 @@
                 @role("admin")
                     <x-responsive-nav-link
                         href="/admin"
+                        target="__blank"
                         class="flex items-center gap-2 px-4 py-3 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
                     >
                         <x-filament::icon icon="heroicon-m-shield-check" class="h-5 w-5 text-gray-500 dark:text-gray-400" />

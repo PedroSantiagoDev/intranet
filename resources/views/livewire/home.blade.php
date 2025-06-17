@@ -1,5 +1,11 @@
 <div class="w-full flex items-center justify-center">
     <div class="w-full space-y-4">
+        @if ($newsAlert)
+            <section>
+                <x-info-alert :type="$newsAlert->type" :title="$newsAlert->title" :content="$newsAlert->content" />
+            </section>
+        @endif
+
         {{-- Seção de Links da Unidade --}}
         <section>
             <div class="p-2 sm:p-4 bg-white dark:bg-gray-900 shadow sm:rounded-lg">

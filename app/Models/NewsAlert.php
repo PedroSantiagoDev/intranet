@@ -12,6 +12,7 @@ class NewsAlert extends Model
         'content',
         'type',
         'is_active',
+        'everyone',
         'user_id',
         'unit_id',
     ];
