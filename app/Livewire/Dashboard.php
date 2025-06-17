@@ -22,7 +22,7 @@ class Dashboard extends Component
     /** @var Collection<int, News> */
     public Collection $news;
 
-    public NewsAlert $newsAlert;
+    public ?NewsAlert $newsAlert = null;
 
     public function mount(): void
     {

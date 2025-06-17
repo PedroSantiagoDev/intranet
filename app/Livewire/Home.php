@@ -15,7 +15,7 @@ class Home extends Component
     /** @var Collection<int, VisitorLinksHeader> */
     public Collection $visitorLinksHeader;
 
-    public NewsAlert $newsAlert;
+    public ?NewsAlert $newsAlert = null;
 
     public function mount(): void
     {
