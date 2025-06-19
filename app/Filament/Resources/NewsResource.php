@@ -53,21 +53,30 @@ class NewsResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(News::with(['user:id,name', 'unit:id,name'])) // Eager loading
             ->columns([
                 TextColumn::make('title')
                     ->label('Título')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->limit(50),
                 IconColumn::make('is_active')
                     ->label('Ativa?')
                     ->boolean(),
                 TextColumn::make('created_at')
                     ->label('Criada em')
                     ->dateTime('d/m/Y H:i')
-                    ->sortable(),
+                    ->sortable()
+                    ->since(),
                 TextColumn::make('user.name')
                     ->label('Autor')
+                    ->searchable()
                     ->sortable(),
+                TextColumn::make('unit.name')
+                    ->label('Unidade')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 TernaryFilter::make('is_active')

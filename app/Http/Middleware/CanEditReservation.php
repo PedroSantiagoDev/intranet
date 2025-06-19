@@ -33,22 +33,22 @@ class CanEditReservation
 
     private function canEditReservation(User $user, Reservation $reservation): bool
     {
-        if ($reservation->status !== 'RESERVADO') {
+        // Use model method instead of hardcoded status
+        if (!$reservation->canBeEdited()) {
             return false;
         }
 
-        if ($user->hasRole('admin')) {
+        // Admin permissions
+        if ($user->hasAnyRole(['admin', 'auditorium'])) {
             return true;
         }
 
-        if ($user->hasRole('auditorium')) {
-            return true;
-        }
-
+        // Specific permission
         if ($user->can('edit auditorium')) {
             return true;
         }
 
+        // Owner check
         if ($reservation->user_id === $user->id) {
             return true;
         }

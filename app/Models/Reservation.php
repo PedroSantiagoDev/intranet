@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Enums\ReservationStatus;
+use Illuminate\Database\Eloquent\{Builder, Model};
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Reservation extends Model
@@ -21,11 +22,71 @@ class Reservation extends Model
         'cancellation_reason',
     ];
 
+    protected $casts = [
+        'date'         => 'date',
+        'start_time'   => 'datetime:H:i',
+        'end_time'     => 'datetime:H:i',
+        'ti_equipment' => 'boolean',
+        'status'       => ReservationStatus::class,
+        'created_at'   => 'datetime',
+        'updated_at'   => 'datetime',
+    ];
+
+    // Scopes
+    public function scopeByStatus(Builder $query, ReservationStatus $status): Builder
+    {
+        return $query->where('status', $status);
+    }
+
+    public function scopeByUser(Builder $query, int $userId): Builder
+    {
+        return $query->where('user_id', $userId);
+    }
+
+    public function scopeByUnit(Builder $query, int $unitId): Builder
+    {
+        return $query->where('unit_id', $unitId);
+    }
+
+    public function scopeUpcoming(Builder $query): Builder
+    {
+        return $query->where('date', '>=', now()->toDateString());
+    }
+
+    public function scopeToday(Builder $query): Builder
+    {
+        return $query->where('date', now()->toDateString());
+    }
+
+    // Business logic methods
+    public function canBeEdited(): bool
+    {
+        return $this->status === ReservationStatus::RESERVED;
+    }
+
+    public function isUpcoming(): bool
+    {
+        return $this->date >= now()->toDateString();
+    }
+
+    public function isPast(): bool
+    {
+        return $this->date < now()->toDateString();
+    }
+
     /**
      * @return BelongsTo<User,$this>
      */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return BelongsTo<Unit,$this>
+     */
+    public function unit(): BelongsTo
+    {
+        return $this->belongsTo(Unit::class);
     }
 }

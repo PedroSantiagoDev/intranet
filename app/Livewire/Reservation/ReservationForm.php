@@ -230,7 +230,7 @@ class ReservationForm extends Component implements HasForms
      */
     private function checkForOverlaps(array $data, ?Reservation $exclude = null): void
     {
-        $query = Reservation::where('date', $data['date'])
+        $query = Reservation::whereDate('date', $data['date'])
             ->where('status', '!=', 'CANCELADO')
             ->where(function ($q) use ($data) {
                 $q->where(function ($inner) use ($data) {

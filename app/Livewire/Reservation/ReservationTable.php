@@ -32,14 +32,14 @@ class ReservationTable extends Component implements HasForms, HasTable
             ->query(
                 Reservation::query()
                     ->with('user')
+                    ->orderByRaw('ABS(julianday(date) - julianday(date("now")))')
+                    ->orderBy('start_time', 'asc')
             )
-            ->defaultSort('date', 'asc')
             ->columns([
                 TextColumn::make('date')
                     ->label('Data')
                     ->date('d/m/Y')
-                    ->searchable()
-                    ->sortable(),
+                    ->searchable(),
                 TextColumn::make('start_time')
                     ->label('Início')
                     ->time('H:i'),
@@ -51,8 +51,7 @@ class ReservationTable extends Component implements HasForms, HasTable
                     ->searchable(),
                 TextColumn::make('user.name')
                     ->label('Responsável')
-                    ->searchable()
-                    ->sortable(),
+                    ->searchable(),
                 IconColumn::make('ti_equipment')
                    ->label('Equip. da TI?')
                     ->alignCenter()
@@ -105,19 +104,6 @@ class ReservationTable extends Component implements HasForms, HasTable
                     }),
             ], layout: FiltersLayout::AboveContent)
             ->actions([
-                Action::make('edit')
-                    ->icon('heroicon-m-pencil-square')
-                    ->url(fn (Reservation $record) => route('reservations.edit', $record))
-                    ->visible(function (Reservation $record) {
-                        $user = auth()->user();
-
-                        return $record->status === 'RESERVADO' && (
-                            $user->hasRole('admin')
-                            || $user->hasRole('auditorium')
-                            || $user->can('edit auditorium')
-                            || $record->user_id === $user->id
-                        );
-                    }),
                 Action::make('copyLink')
                 ->icon('heroicon-o-clipboard-document')
                 ->iconButton()
@@ -133,10 +119,43 @@ class ReservationTable extends Component implements HasForms, HasTable
                     }
                 })
                 ->visible(fn (Reservation $record) => !empty($record->event_link)),
+                Action::make('edit')
+                    ->icon('heroicon-m-pencil-square')
+                    ->url(fn (Reservation $record) => route('reservations.edit', $record))
+                    ->visible(function (Reservation $record) {
+                        return $this->canEditReservation($record);
+                    }),
             ])
             ->bulkActions([
                 //
             ]);
+    }
+
+    private function canEditReservation(Reservation $reservation): bool
+    {
+        $user = auth()->user();
+
+        // Verifica se a reserva pode ser editada
+        if (!$reservation->canBeEdited()) {
+            return false;
+        }
+
+        // Admin e auditorium têm permissão total
+        if ($user->hasAnyRole(['admin', 'auditorium'])) {
+            return true;
+        }
+
+        // Permissão específica
+        if ($user->can('edit auditorium')) {
+            return true;
+        }
+
+        // Usuário que criou a reserva pode editar
+        if ($reservation->user_id === $user->id) {
+            return true;
+        }
+
+        return false;
     }
 
     public function render(): View

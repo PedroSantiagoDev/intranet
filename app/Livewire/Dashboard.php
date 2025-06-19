@@ -3,8 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\{News, NewsAlert, UserLink, VisitorLinksHeader};
+use App\Services\DashboardService;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Livewire\Attributes\{Layout, Title};
 use Livewire\Component;
@@ -24,33 +24,16 @@ class Dashboard extends Component
 
     public ?NewsAlert $newsAlert = null;
 
-    public function mount(): void
+    public function mount(DashboardService $dashboardService): void
     {
-        $this->unitLinks = VisitorLinksHeader::where('is_active', true)->get();
+        $user = auth()->user();
 
-        $this->userLinks = auth()->user()->userLinks()
-            ->where('is_active', true)
-            ->orderBy('sort')
-            ->get();
+        $data = $dashboardService->getDashboardData($user->id, $user->unit_id);
 
-        $this->news = News::where('unit_id', auth()->user()->unit_id)
-            ->where('is_active', true)
-            ->orderBy('created_at', 'desc') // Order by News DESC
-            ->get()
-            ->map(function ($item) {
-                $item->file = $item->file ? Storage::url($item->file) : null;
-
-                return $item;
-            });
-
-        $this->newsAlert = NewsAlert::query()
-            ->where('is_active', true)
-            ->where(function ($query) {
-                $query->where('everyone', true)
-                    ->orWhere('unit_id', auth()->user()->unit_id);
-            })
-            ->orderBy('created_at', 'desc')
-            ->first();
+        $this->unitLinks = $data['unitLinks'];
+        $this->userLinks = $data['userLinks'];
+        $this->news      = $data['news'];
+        $this->newsAlert = $data['newsAlert'];
     }
 
     public function render(): View
