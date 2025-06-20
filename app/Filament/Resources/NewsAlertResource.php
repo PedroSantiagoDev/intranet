@@ -15,9 +15,9 @@ class NewsAlertResource extends Resource
 {
     protected static ?string $model = NewsAlert::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-newspaper';
+    protected static ?string $navigationIcon = 'heroicon-o-bell';
 
-    protected static ?string $label = 'Notícias Alertas';
+    protected static ?string $label = 'Alertas';
 
     protected static ?string $navigationGroup = 'Notícias';
 

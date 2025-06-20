@@ -63,7 +63,7 @@
         <div class="space-y-4">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div>
-                    <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100">Meus Links Favoritos</h2>
+                    <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100">Meus Favoritos</h2>
                     <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Acesse rapidamente seus links personalizados</p>
                 </div>
                 <x-filament::button color="gray" href="/links" tag="a" icon="heroicon-m-pencil-square" class="shrink-0 text-xs" wire:navigate>Editar</x-filament::button>
@@ -160,7 +160,7 @@
                                     <template x-if="slide.url && slide.url.trim() !== ''">
                                         <a :href="slide.url" class="block relative h-full w-full group cursor-pointer">
                                             <img
-                                                :src="slide.file"
+                                                :src="slide.file_url"
                                                 :alt="slide.title"
                                                 class="h-full w-full object-fill rounded-xl border border-gray-200 dark:border-gray-700 group-hover:scale-105 transition-transform duration-300"
                                                 loading="lazy"
@@ -180,7 +180,7 @@
                                     <template x-if="! slide.url || slide.url.trim() === ''">
                                         <div class="relative h-full w-full flex items-center justify-center">
                                             <img
-                                                :src="slide.file"
+                                                :src="slide.file_url"
                                                 :alt="slide.title"
                                                 class="h-full w-full object-fill rounded-xl border border-gray-200 dark:border-gray-700"
                                                 loading="lazy"

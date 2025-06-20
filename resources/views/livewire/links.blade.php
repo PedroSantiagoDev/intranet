@@ -5,7 +5,7 @@
         <div class="space-x-2">
             <x-filament::modal id="create-edit-link" width="lg" :close-by-clicking-away="false">
                 <x-slot name="trigger">
-                    <x-filament::button>Criar Link</x-filament::button>
+                    <x-filament::button>Criar</x-filament::button>
                 </x-slot>
 
                 {{-- Modal content --}}

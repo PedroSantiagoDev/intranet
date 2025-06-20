@@ -27,7 +27,6 @@ class Reservation extends Model
         'start_time'   => 'datetime:H:i',
         'end_time'     => 'datetime:H:i',
         'ti_equipment' => 'boolean',
-        'status'       => ReservationStatus::class,
         'created_at'   => 'datetime',
         'updated_at'   => 'datetime',
     ];
@@ -61,7 +60,7 @@ class Reservation extends Model
     // Business logic methods
     public function canBeEdited(): bool
     {
-        return $this->status === ReservationStatus::RESERVED;
+        return $this->status === ReservationStatus::RESERVED->value;
     }
 
     public function isUpcoming(): bool

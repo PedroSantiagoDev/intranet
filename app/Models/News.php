@@ -53,4 +53,35 @@ class News extends Model
     {
         return $this->belongsTo(Unit::class);
     }
+
+    /**
+     * O método boot é chamado automaticamente quando o modelo é iniciado.
+     * É o lugar ideal para registrar listeners de eventos do modelo.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function (News $news) {
+            self::deleteAssociatedFile($news->file);
+        });
+
+        static::updating(function (News $news) {
+            if ($news->isDirty('file') && $news->getOriginal('file')) {
+                self::deleteAssociatedFile($news->getOriginal('file'));
+            }
+        });
+    }
+
+    /**
+     * Helper method to delete a file from storage.
+     *
+     * @param string|null $filePath The path to the file to be deleted.
+     */
+    protected static function deleteAssociatedFile(?string $filePath): void
+    {
+        if ($filePath && Storage::disk('public')->exists($filePath)) {
+            Storage::disk('public')->delete($filePath);
+        }
+    }
 }
