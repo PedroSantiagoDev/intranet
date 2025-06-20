@@ -2,7 +2,7 @@
     <div class="flex justify-between">
         <h2 class="text-xl font-bold text-gray-800 dark:text-white">Reservas</h2>
         <div class="space-x-2">
-            <x-filament::button href="{{ route('reservations.create') }}" tag="a">Criar</x-filament::button>
+            <x-filament::button href="{{ route('reservations.create') }}" tag="a" wire:navigate>Criar</x-filament::button>
         </div>
     </div>
 

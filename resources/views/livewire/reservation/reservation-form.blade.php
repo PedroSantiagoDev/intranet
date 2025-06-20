@@ -4,7 +4,7 @@
 
         <div class="space-x-2">
             <x-filament::button type="submit" wire:loading.attr="disabled">{{ $reservation ? "Atualizar Reserva" : "Criar Reserva" }}</x-filament::button>
-            <x-filament::button color="gray" href="{{ route('reservations.index') }}" tag="a">Voltar</x-filament::button>
+            <x-filament::button color="gray" href="{{ route('reservations.index') }}" tag="a" wire:navigate>Voltar</x-filament::button>
         </div>
     </form>
 
