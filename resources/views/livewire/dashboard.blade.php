@@ -105,7 +105,7 @@
                         if (this.autoPlay) {
                             this.nextSlide()
                         }
-                    }, 6000)
+                    }, 8000)
                 },
                 stopAutoPlay() {
                     if (this.autoPlayInterval) {
@@ -158,16 +158,16 @@
                                 >
                                     {{-- Link condicional --}}
                                     <template x-if="slide.url && slide.url.trim() !== ''">
-                                        <a :href="slide.url" class="block relative h-full w-full group cursor-pointer">
+                                        <a :href="slide.url" target="__black" class="relative h-full w-full cursor-pointer">
                                             <img
                                                 :src="slide.file_url"
                                                 :alt="slide.title"
-                                                class="h-full w-full object-fill rounded-xl border border-gray-200 dark:border-gray-700 group-hover:scale-105 transition-transform duration-300"
+                                                class="h-full w-full object-fill rounded-xl border border-gray-200 dark:border-gray-700"
                                                 loading="lazy"
                                             />
 
                                             {{-- Mensagem de clique apenas se houver link --}}
-                                            <div class="absolute bottom-0 left-0 right-0 p-3 sm:p-4 bg-gradient-to-t from-black/80 to-transparent">
+                                            <div class="absolute bottom-0 left-0 right-0 p-3 sm:p-4 rounded-xl bg-gradient-to-t from-black/80 to-transparent">
                                                 <div class="flex items-center gap-2 text-white/90">
                                                     <x-filament::icon icon="heroicon-m-cursor-arrow-rays" class="h-4 w-4" />
                                                     <p class="text-xs sm:text-sm">Clique para ver mais detalhes</p>

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class News extends Model
 {
-    protected $fillable = ['unit_id', 'user_id', 'title', 'file', 'is_active'];
+    protected $fillable = ['unit_id', 'user_id', 'title', 'file',  'link_url', 'link_file', 'link_type', 'is_active'];
 
     protected $casts = [
         'is_active'  => 'boolean',
@@ -38,6 +38,39 @@ class News extends Model
         return $this->file ? Storage::url($this->file) : null;
     }
 
+    public function getLinkUrlAttribute($value)
+    {
+        if ($this->link_type === 'file' && $this->link_file) {
+            return Storage::url($this->link_file);
+        }
+
+        return $value;
+    }
+
+    public function getHasLinkAttribute()
+    {
+        return $this->link_type !== 'none' &&
+               (($this->link_type === 'url' && !empty($this->attributes['link_url'])) ||
+                ($this->link_type === 'file' && !empty($this->link_file)));
+    }
+
+    public function getFinalLinkUrlAttribute()
+    {
+        if (!$this->has_link) {
+            return null;
+        }
+
+        if ($this->link_type === 'url') {
+            return $this->attributes['link_url'];
+        }
+
+        if ($this->link_type === 'file' && $this->link_file) {
+            return Storage::url($this->link_file);
+        }
+
+        return null;
+    }
+
     /**
      * @return BelongsTo<User,$this>
      */
@@ -64,11 +97,13 @@ class News extends Model
 
         static::deleting(function (News $news) {
             self::deleteAssociatedFile($news->file);
+            self::deleteAssociatedFile($news->link_file);
         });
 
         static::updating(function (News $news) {
             if ($news->isDirty('file') && $news->getOriginal('file')) {
                 self::deleteAssociatedFile($news->getOriginal('file'));
+                self::deleteAssociatedFile($news->getOriginal('link_file'));
             }
         });
     }

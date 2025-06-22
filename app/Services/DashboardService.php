@@ -50,13 +50,4 @@ class DashboardService
                 ->first();
         });
     }
-
-    public function getQuickStats(int $userId, int $unitId): array
-    {
-        return [
-            'total_links'  => UserLink::where('user_id', $userId)->count(),
-            'active_links' => UserLink::where('user_id', $userId)->where('is_active', true)->count(),
-            'news_stats'   => $this->newsService->getNewsStats($unitId),
-        ];
-    }
 }

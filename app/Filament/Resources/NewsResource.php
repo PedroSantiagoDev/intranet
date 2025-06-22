@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\NewsResource\{Pages};
 use App\Models\News;
-use Filament\Forms\Components\{FileUpload, Hidden, Section, TextInput, Toggle};
+use Filament\Forms\Components\{FileUpload, Hidden, Radio, Section, Select, TextInput, Toggle};
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\{IconColumn, TextColumn};
@@ -38,15 +38,55 @@ class NewsResource extends Resource
                             ->maxSize(2048) // 2MB
                             ->image()
                             ->required(),
+                        Select::make('unit_id')
+                            ->label('Unidade')
+                            ->relationship('unit', 'name')
+                            ->required()
+                            ->searchable()
+                            ->preload(),
                         Toggle::make('is_active')
                             ->label('Ativo?')
                              ->inline()
                             ->default(true),
                         Hidden::make('user_id')
                             ->default(auth()->id()),
-                        Hidden::make('unit_id')
-                            ->default(auth()->user()->unit_id),
                     ]),
+
+                Section::make('Link da Notícia')
+                ->description('Configure um link para quando o usuário clicar na notícia')
+                ->schema([
+                    Radio::make('link_type')
+                        ->label('Tipo de Link')
+                        ->options([
+                            'none' => 'Nenhum link',
+                            'url'  => 'Link externo (URL)',
+                            'file' => 'Arquivo (PDF)',
+                        ])
+                        ->default('none')
+                        ->inline()
+                        ->live(),
+                    TextInput::make('link_url')
+                        ->label('URL do Link')
+                        ->url()
+                        ->placeholder('https://exemplo.com')
+                        ->visible(fn ($get) => $get('link_type') === 'url')
+                        ->required(fn ($get) => $get('link_type') === 'url')
+                        ->helperText('Digite a URL completa (incluindo https://)'),
+                    FileUpload::make('link_file')
+                        ->label('Arquivo')
+                        ->directory('news-links')
+                        ->maxSize(10240) // 10MB
+                        ->acceptedFileTypes([
+                            'application/pdf',
+                        ])
+                        ->visible(fn ($get) => $get('link_type') === 'file')
+                        ->required(fn ($get) => $get('link_type') === 'file')
+                        ->helperText('Formato aceito: PDF')
+                        ->downloadable()
+                        ->previewable(),
+                ])
+                ->collapsible()
+                ->collapsed(fn ($record) => $record?->link_type === 'none'),
             ]);
     }
 
