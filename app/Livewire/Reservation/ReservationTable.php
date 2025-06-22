@@ -49,6 +49,8 @@ class ReservationTable extends Component implements HasForms, HasTable
                 TextColumn::make('subject')
                     ->label('Assunto')
                     ->searchable(),
+                TextColumn::make('room.name')
+                    ->label('Sala'),
                 TextColumn::make('user.name')
                     ->label('Responsável')
                     ->searchable(),

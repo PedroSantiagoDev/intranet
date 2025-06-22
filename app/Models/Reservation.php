@@ -11,6 +11,7 @@ class Reservation extends Model
     protected $fillable = [
         'user_id',
         'unit_id',
+        'room_id',
         'date',
         'start_time',
         'end_time',
@@ -87,5 +88,13 @@ class Reservation extends Model
     public function unit(): BelongsTo
     {
         return $this->belongsTo(Unit::class);
+    }
+
+    /**
+     * @return BelongsTo<Room,$this>
+     */
+    public function room(): BelongsTo
+    {
+        return $this->belongsTo(Room::class);
     }
 }

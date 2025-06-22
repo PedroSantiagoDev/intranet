@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Reservation;
 
-use App\Models\Reservation;
+use App\Models\{Reservation, Room};
 use Carbon\Carbon;
 use Filament\Forms\{ComponentContainer, Form};
 use Filament\Forms\Components\{DatePicker, Grid, Hidden, Section, Select, TextInput, Textarea, TimePicker, Toggle};
@@ -45,6 +45,7 @@ class ReservationForm extends Component implements HasForms
                 'status'       => $this->reservation->status,
                 'user_id'      => $this->reservation->user_id,
                 'unit_id'      => $this->reservation->unit_id,
+                'room_id'      => $this->reservation->room_id,
             ]);
         } else {
             $this->form->fill([
@@ -63,8 +64,14 @@ class ReservationForm extends Component implements HasForms
             ->schema([
                 Section::make('Detalhes da Reserva')
                     ->schema([
-                        Grid::make(3)
+                        Grid::make(4)
                             ->schema([
+                                Select::make('room_id')
+                                    ->label('Sala')
+                                    ->options(Room::where('active', true)->pluck('name', 'id'))
+                                    ->required()
+                                    ->searchable()
+                                    ->preload(),
                                 DatePicker::make('date')
                                     ->label('Data da Reserva')
                                     ->required()

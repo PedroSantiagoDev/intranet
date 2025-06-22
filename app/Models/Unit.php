@@ -55,4 +55,12 @@ class Unit extends Model
     {
         return $this->hasMany(NewsAlert::class);
     }
+
+    /**
+     * @return HasMany<Room,$this>
+     */
+    public function rooms(): HasMany
+    {
+        return $this->hasMany(Room::class);
+    }
 }

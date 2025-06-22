@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\VisitorLinksHeader;
+use App\Observers\VisitorLinksHeaderObserver;
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
 use Illuminate\Support\ServiceProvider;
@@ -22,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        VisitorLinksHeader::observe(VisitorLinksHeaderObserver::class);
+
         FilamentColor::register([
             'danger'  => Color::Rose,
             'gray'    => Color::Gray,
