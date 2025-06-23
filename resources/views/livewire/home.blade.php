@@ -15,7 +15,7 @@
                     </div>
                 @else
                     <div class="p-2 sm:p-4">
-                        <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-6">
+                        <div class="grid grid-cols-1 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
                             @foreach ($visitorLinksHeader as $link)
                                 <x-header-link :title="$link->name" :url="$link->url" :icon="$link->icon" />
                             @endforeach
