@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(\App\Services\NewsService::class);
         $this->app->singleton(\App\Services\DashboardService::class);
+        $this->app->singleton(\App\Services\HomeService::class);
     }
 
     /**

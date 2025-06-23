@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\{NewsAlert, VisitorLinksHeader};
+use App\Services\HomeService;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Attributes\{Layout, Title};
@@ -17,15 +18,12 @@ class Home extends Component
 
     public ?NewsAlert $newsAlert = null;
 
-    public function mount(): void
+    public function mount(HomeService $homeService): void
     {
-        $this->visitorLinksHeader = VisitorLinksHeader::where('is_active', true)->orderBy('sort')->get();
+        $data = $homeService->getHomeData();
 
-        $this->newsAlert = NewsAlert::query()
-            ->where('is_active', true)
-            ->where('everyone', true)
-            ->orderBy('created_at', 'desc')
-            ->first();
+        $this->visitorLinksHeader = $data['visitorLinksHeader'];
+        $this->newsAlert          = $data['newsAlert'];
     }
 
     public function render(): View
