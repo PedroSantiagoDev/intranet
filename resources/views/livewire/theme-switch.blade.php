@@ -116,14 +116,14 @@
     </div>
 </div>
 <script>
+    function handleSystemThemeChange(e) {
+        if ('{{ $theme }}' === 'system') {
+            applyTheme('system');
+        }
+    }
+
     function initThemeManager() {
         const systemThemeMedia = window.matchMedia('(prefers-color-scheme: dark)');
-
-        function handleSystemThemeChange(e) {
-            if ('{{ $theme }}' === 'system') {
-                applyTheme('system');
-            }
-        }
 
         function applyTheme(theme) {
             const htmlElement = document.documentElement;

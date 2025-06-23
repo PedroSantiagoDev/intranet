@@ -57,6 +57,7 @@ class VisitorLinksHeaderResource extends Resource
     {
         return $table
             ->reorderable('sort')
+            ->defaultSort('sort')
             ->columns([
                 TextColumn::make('name')
                   ->label('Nome')

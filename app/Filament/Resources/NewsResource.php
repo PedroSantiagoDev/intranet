@@ -95,6 +95,7 @@ class NewsResource extends Resource
         return $table
             ->query(News::with(['user:id,name', 'unit:id,name'])) // Eager loading
             ->reorderable('sort')
+            ->defaultSort('sort')
             ->columns([
                 TextColumn::make('title')
                     ->label('Título')

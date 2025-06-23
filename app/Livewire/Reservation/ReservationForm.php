@@ -68,7 +68,7 @@ class ReservationForm extends Component implements HasForms
                             ->schema([
                                 Select::make('room_id')
                                     ->label('Sala')
-                                    ->options(Room::where('is_active', true)->pluck('name', 'id'))
+                                    ->options(Room::where('is_active', true)->where('unit_id', Auth::user()->unit_id)->pluck('name', 'id'))
                                     ->required()
                                     ->searchable()
                                     ->preload(),
