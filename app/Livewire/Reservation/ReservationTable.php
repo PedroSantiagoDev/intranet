@@ -32,7 +32,7 @@ class ReservationTable extends Component implements HasForms, HasTable
             ->query(
                 Reservation::query()
                     ->with('user')
-                    ->orderByRaw('ABS(julianday(date) - julianday(date("now")))')
+                    ->orderByRaw('ABS(DATEDIFF(date, CURDATE()))')
                     ->orderBy('start_time', 'asc')
             )
             ->columns([

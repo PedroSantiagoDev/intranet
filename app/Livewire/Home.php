@@ -19,7 +19,7 @@ class Home extends Component
 
     public function mount(): void
     {
-        $this->visitorLinksHeader = VisitorLinksHeader::where('is_active', true)->get();
+        $this->visitorLinksHeader = VisitorLinksHeader::where('is_active', true)->orderBy('sort')->get();
 
         $this->newsAlert = NewsAlert::query()
             ->where('is_active', true)

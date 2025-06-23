@@ -26,7 +26,7 @@ class DashboardService
     private function getActiveVisitorLinks(): Collection
     {
         return Cache::remember('visitor_links_active', 300, function () {
-            return VisitorLinksHeader::where('is_active', true)->get();
+            return VisitorLinksHeader::where('is_active', true)->orderBy('sort')->get();
         });
     }
 

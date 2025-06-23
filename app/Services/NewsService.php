@@ -13,7 +13,7 @@ class NewsService
         return News::with(['user:id,name', 'unit:id,name'])
             ->where('unit_id', $unitId)
             ->where('is_active', true)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('sort')
             ->get()
             ->map(function ($news) {
                 $news->file_url = $news->file ? Storage::url($news->file) : null;

@@ -76,10 +76,6 @@ class Links extends Component implements HasForms, HasTable
             ->defaultSort('sort', 'asc')
             ->reorderable('sort')
             ->columns([
-                TextColumn::make('sort')
-                    ->label('Reordenar')
-                    ->icon('heroicon-m-arrows-up-down')
-                    ->tooltip('Arraste para reordenar'),
                 TextColumn::make('name')
                     ->label('Nome')
                     ->searchable()
