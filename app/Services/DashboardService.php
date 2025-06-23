@@ -40,14 +40,12 @@ class DashboardService
 
     private function getActiveNewsAlert(int $unitId): ?NewsAlert
     {
-        return Cache::remember("news_alert_unit_{$unitId}", 300, function () use ($unitId) {
-            return NewsAlert::where('is_active', true)
-                ->where(function ($query) use ($unitId) {
-                    $query->where('everyone', true)
-                        ->orWhere('unit_id', $unitId);
-                })
-                ->orderBy('created_at', 'desc')
-                ->first();
-        });
+        return NewsAlert::where('is_active', true)
+            ->where(function ($query) use ($unitId) {
+                $query->where('everyone', true)
+                    ->orWhere('unit_id', $unitId);
+            })
+            ->orderBy('created_at', 'desc')
+            ->first();
     }
 }
