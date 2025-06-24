@@ -170,7 +170,7 @@
                                             <div class="absolute bottom-0 left-0 right-0 p-3 sm:p-4 rounded-xl bg-gradient-to-t from-black/80 to-transparent">
                                                 <div class="flex items-center gap-2 text-white/90">
                                                     <x-filament::icon icon="heroicon-m-cursor-arrow-rays" class="h-4 w-4" />
-                                                    <p class="text-xs sm:text-sm">Clique para ver mais detalhes</p>
+                                                    <p class="text-xs sm:text-sm">Clique para mais detalhes</p>
                                                 </div>
                                             </div>
                                         </a>

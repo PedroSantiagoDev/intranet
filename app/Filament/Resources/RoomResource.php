@@ -18,7 +18,7 @@ class RoomResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $label = 'Salas das unidade';
+    protected static ?string $label = 'Salas das Unidades';
 
     protected static ?string $navigationGroup = 'Reservas';
 
