@@ -191,21 +191,11 @@ class ReservationForm extends Component implements HasForms
 
     public function update(Reservation $reservation): void
     {
-        $validated  = $this->form->validate();
-        $data       = $validated['data'];
-        $isPastDate = Carbon::parse($reservation->date)->isPast();
+        $validated = $this->form->validate();
+        $data      = $validated['data'];
 
-        if ($isPastDate) {
-            $data['date']         = $reservation->date;
-            $data['start_time']   = $reservation->start_time;
-            $data['end_time']     = $reservation->end_time;
-            $data['subject']      = $reservation->subject;
-            $data['event_link']   = $reservation->event_link;
-            $data['ti_equipment'] = $reservation->ti_equipment;
-        } else {
-            $this->validateTimes($data);
-            $this->checkForOverlaps($data, $reservation);
-        }
+        $this->validateTimes($data);
+        $this->checkForOverlaps($data, $reservation);
 
         $reservation->update($data);
 
