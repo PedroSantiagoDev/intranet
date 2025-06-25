@@ -10,21 +10,21 @@
 
     <script>
         document.addEventListener('livewire:init', () => {
-            Livewire.on('copyToClipboard', (event) => {
-                const text = event.text;
-
+            Livewire.on('copyToClipboard', ({ text }) => {
                 const input = document.createElement('textarea');
                 input.value = text;
                 document.body.appendChild(input);
                 input.select();
 
-                try {
-                    navigator.clipboard.writeText(text).then(() => {
+                navigator.clipboard
+                    .writeText(text)
+                    .then(() => {
                         console.log('Link copiado com sucesso');
+                    })
+                    .catch((err) => {
+                        console.warn('Erro ao copiar', err);
+                        document.execCommand('copy');
                     });
-                } catch (err) {
-                    document.execCommand('copy');
-                }
 
                 document.body.removeChild(input);
             });
