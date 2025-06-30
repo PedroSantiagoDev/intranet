@@ -157,8 +157,8 @@
                                     class="absolute inset-0 flex items-center justify-center"
                                 >
                                     {{-- Link condicional --}}
-                                    <template x-if="slide.url && slide.url.trim() !== ''">
-                                        <a :href="slide.url" target="__black" class="relative h-full w-full cursor-pointer">
+                                    <template x-if="slide.link_url && slide.link_url.trim() !== ''">
+                                        <a :href="slide.link_url" target="__black" class="relative h-full w-full cursor-pointer">
                                             <img
                                                 :src="slide.file_url"
                                                 :alt="slide.title"
@@ -177,7 +177,7 @@
                                     </template>
 
                                     {{-- Imagem sem link --}}
-                                    <template x-if="! slide.url || slide.url.trim() === ''">
+                                    <template x-if="! slide.link_url || slide.link_url.trim() === ''">
                                         <div class="relative h-full w-full flex items-center justify-center">
                                             <img
                                                 :src="slide.file_url"

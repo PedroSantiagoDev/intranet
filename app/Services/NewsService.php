@@ -18,7 +18,7 @@ class NewsService
             ->map(function ($news) {
                 $news->file_url = $news->file ? Storage::url($news->file) : null;
 
-                $news->url = $this->getNewsLinkUrl($news);
+                $news->link_url = $this->getNewsLinkUrl($news);
 
                 $news->has_link = !empty($news->url);
 

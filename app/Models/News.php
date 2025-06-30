@@ -54,23 +54,6 @@ class News extends Model
                 ($this->link_type === 'file' && !empty($this->link_file)));
     }
 
-    public function getFinalLinkUrlAttribute()
-    {
-        if (!$this->has_link) {
-            return null;
-        }
-
-        if ($this->link_type === 'url') {
-            return $this->attributes['link_url'];
-        }
-
-        if ($this->link_type === 'file' && $this->link_file) {
-            return Storage::url($this->link_file);
-        }
-
-        return null;
-    }
-
     /**
      * @return BelongsTo<User,$this>
      */

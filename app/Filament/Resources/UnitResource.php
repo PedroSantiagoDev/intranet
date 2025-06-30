@@ -38,16 +38,18 @@ class UnitResource extends Resource
                             ->maxLength(255),
                         TextInput::make('phone')
                             ->label('Telefone')
-                            ->mask('(99) 99999-9999')
-                            ->maxLength(11),
+                            ->mask('(99) 9999-9999')
+                            ->dehydrateStateUsing(fn ($state) => preg_replace('/[^0-9]/', '', $state))
+                            ->maxLength(19),
                     ])->columns(3),
                 Section::make('Endereço')
                     ->schema([
                         TextInput::make('postal_code')
                             ->label('CEP')
                             ->mask('99999-999')
+                            ->dehydrateStateUsing(fn ($state) => preg_replace('/[^0-9]/', '', $state))
                             ->required()
-                            ->maxLength(8),
+                            ->maxLength(9),
                         TextInput::make('street')
                             ->label('Rua')
                             ->required()
