@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\{NewsAlert, UserLink, VisitorLinksHeader};
+use App\Models\{NewsAlert, UnitLink, UserLink};
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\{Auth, Cache};
 
 class DashboardService
 {
@@ -16,17 +16,17 @@ class DashboardService
     public function getDashboardData(int $userId, int $unitId): array
     {
         return [
-            'unitLinks' => $this->getActiveVisitorLinks(),
+            'unitLinks' => $this->getActiveUnitLinks(),
             'userLinks' => $this->getActiveUserLinks($userId),
             'news'      => $this->newsService->getActiveNewsByUnit($unitId),
             'newsAlert' => $this->getActiveNewsAlert($unitId),
         ];
     }
 
-    private function getActiveVisitorLinks(): Collection
+    private function getActiveUnitLinks(): Collection
     {
-        return Cache::remember('visitor_links_active', 300, function () {
-            return VisitorLinksHeader::where('is_active', true)->orderBy('sort')->get();
+        return Cache::remember('unit_links_links', 300, function () {
+            return UnitLink::where('is_active', true)->where('unit_id', Auth::user()->unit_id)->orderBy('sort')->get();
         });
     }
 

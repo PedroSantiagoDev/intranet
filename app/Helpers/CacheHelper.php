@@ -6,9 +6,15 @@ use Illuminate\Support\Facades\Cache;
 
 class CacheHelper
 {
+    public const UNIT_LINKS_KEY    = 'unit_links_links';
     public const VISITOR_LINKS_KEY = 'visitor_links_active';
     public const NEWS_ALERT_KEY    = 'news_alert_unit_';
     public const USER_LINKS_KEY    = 'user_links_';
+
+    public static function unitLinksKey(): string
+    {
+        return self::UNIT_LINKS_KEY;
+    }
 
     public static function visitorLinksKey(): string
     {
@@ -23,6 +29,11 @@ class CacheHelper
     public static function userLinksKey(int $userId): string
     {
         return self::USER_LINKS_KEY . $userId;
+    }
+
+    public static function clearUnitLinks(): bool
+    {
+        return Cache::forget(self::UNIT_LINKS_KEY);
     }
 
     public static function clearVisitorLinks(): bool

@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\{News, NewsAlert, UserLink, VisitorLinksHeader};
+use App\Models\{News, NewsAlert, UnitLink, UserLink};
 use App\Services\DashboardService;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
@@ -13,7 +13,7 @@ use Livewire\Component;
 #[Title('Início')]
 class Dashboard extends Component
 {
-    /** @var Collection<int, VisitorLinksHeader> */
+    /** @var Collection<int, UnitLink> */
     public Collection $unitLinks;
 
     /** @var Collection<int, UserLink> */

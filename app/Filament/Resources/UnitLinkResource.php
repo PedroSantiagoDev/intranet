@@ -8,8 +8,11 @@ use Filament\Forms\Components\{Hidden, Select, TextInput, Toggle, View};
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\{IconColumn, TextColumn};
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Filament\{Tables};
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class UnitLinkResource extends Resource
 {
@@ -20,8 +23,6 @@ class UnitLinkResource extends Resource
     protected static ?string $label = 'links da unidade';
 
     protected static ?string $navigationGroup = 'Links';
-
-    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form
     {
@@ -52,10 +53,14 @@ class UnitLinkResource extends Resource
                     ->label('Ativo?')
                     ->inline()
                     ->default(true),
+                Select::make('unit_id')
+                    ->label('Unidade')
+                    ->relationship('unit', 'name')
+                    ->required()
+                    ->searchable()
+                    ->preload(),
                 Hidden::make('user_id')
                     ->default(auth()->id()),
-                Hidden::make('unit_id')
-                    ->default(auth()->user()->unit_id),
             ])->columns(1);
     }
 
@@ -75,13 +80,25 @@ class UnitLinkResource extends Resource
                     ->label('Ícone')
                     ->icon(fn (UnitLink $record): string => "heroicon-o-{$record->icon}")
                     ->color('primary'),
+                TextColumn::make('unit.name')
+                   ->label('Unidade')
+                   ->searchable()
+                   ->sortable(),
                 IconColumn::make('is_active')
                     ->label('Ativo')
                     ->sortable()
                     ->boolean(),
             ])
             ->filters([
-                //
+                SelectFilter::make('unit')
+                ->relationship('unit', 'name')
+                ->default(Auth::user()->unit_id)
+                ->label('Filtrar por Unidade')
+                ->query(function (Builder $query, array $data) {
+                    if (!empty($data['value'])) {
+                        $query->where('unit_id', $data['value']);
+                    }
+                }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
