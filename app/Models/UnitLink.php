@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class UnitLink extends Model
 {
     protected $fillable = [
-        'unit_id', 'user_id', 'name', 'url', 'icon', 'is_active',
+        'unit_id', 'user_id', 'name', 'url', 'icon', 'is_active', 'sort',
     ];
 
     protected $casts = [

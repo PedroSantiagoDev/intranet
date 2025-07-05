@@ -21,7 +21,6 @@ class UnitResource extends Resource
 
     protected static ?string $navigationGroup = 'Configurações';
 
-    // TODO resolver os tamanhos dos campos
     public static function form(Form $form): Form
     {
         return $form

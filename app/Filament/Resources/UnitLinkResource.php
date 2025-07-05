@@ -20,7 +20,7 @@ class UnitLinkResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-link';
 
-    protected static ?string $label = 'links da unidade';
+    protected static ?string $label = 'links das unidades';
 
     protected static ?string $navigationGroup = 'Links';
 
