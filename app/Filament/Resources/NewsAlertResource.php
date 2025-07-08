@@ -50,6 +50,7 @@ class NewsAlertResource extends Resource
                     ->label('Para todos?')
                     ->inline()
                     ->default(false)
+                    ->visible(Auth::user()?->hasRole('super_admin'))
                     ->helperText('Se ativado, o alerta será visível para todos os usuários, independentemente da unidade.'),
                 Hidden::make('unit_id')
                     ->default(Auth::user()->unit_id),

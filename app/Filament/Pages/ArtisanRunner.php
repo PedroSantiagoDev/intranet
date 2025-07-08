@@ -27,10 +27,9 @@ class ArtisanRunner extends Page implements HasForms
 
     protected static ?int $navigationSort = 999;
 
-    // Apenas administradores podem acessar
     public static function canAccess(): bool
     {
-        return auth()->user()?->hasRole('admin') ?? false;
+        return auth()->user()?->hasRole('super_admin') ?? false;
     }
 
     /** @var array<string, mixed> */

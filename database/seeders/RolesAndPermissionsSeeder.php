@@ -8,26 +8,41 @@ use Spatie\Permission\PermissionRegistrar;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
+    // Constants for Role Names
+    public const ROLE_ADMIN       = 'admin';
+    public const ROLE_SUPER_ADMIN = 'super_admin';
+    public const ROLE_NEWS        = 'news';
+    public const ROLE_AUDITORIUM  = 'auditorium';
+
+    // Constants for Permission Actions
+    public const ACTION_CREATE        = 'create';
+    public const ACTION_EDIT          = 'edit';
+    public const ACTION_DELETE        = 'delete';
+    public const ACTION_VIEW          = 'view';
+    public const ACTION_CHANGE_STATUS = 'change_status';
+
     /**
      * Definição dos módulos e suas ações permitidas
      */
     private array $modules = [
-        'news'       => ['create', 'edit', 'delete', 'view'],
-        'auditorium' => ['create', 'edit', 'delete', 'view', 'change_status'],
+        self::ROLE_NEWS       => [self::ACTION_CREATE, self::ACTION_EDIT, self::ACTION_DELETE, self::ACTION_VIEW],
+        self::ROLE_AUDITORIUM => [self::ACTION_CREATE, self::ACTION_EDIT, self::ACTION_DELETE, self::ACTION_VIEW, self::ACTION_CHANGE_STATUS],
     ];
 
     /**
      * Definição das roles e suas permissões
      */
     private array $rolePermissions = [
-        'admin' => '*', // Todas as permissões
-        'news'  => [
-            'modules'      => ['news'],
+        self::ROLE_ADMIN       => '*', // Todas as permissões
+        self::ROLE_SUPER_ADMIN => '*', // Todas as permissões
+        self::ROLE_NEWS        => [
+            'modules'      => [self::ROLE_NEWS],
             'restrictions' => [], // Sem restrições - pode fazer tudo com news
         ],
-        'auditorium' => [
-            'modules' => ['auditorium'],
-            'actions' => ['view', 'edit', 'change_status'], // Só essas ações específicas
+
+        self::ROLE_AUDITORIUM => [
+            'modules' => [self::ROLE_AUDITORIUM],
+            'actions' => [self::ACTION_VIEW, self::ACTION_EDIT, self::ACTION_CHANGE_STATUS], // Só essas ações específicas
         ],
     ];
 
@@ -36,7 +51,9 @@ class RolesAndPermissionsSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
+        $this->deleteStalePermissions();
         $this->createPermissions();
+        $this->deleteStaleRoles();
         $this->createRoles();
 
         $this->command->info('Roles and permissions created successfully!');
@@ -157,5 +174,49 @@ class RolesAndPermissionsSeeder extends Seeder
         }
 
         return $permissions;
+    }
+
+    /**
+     * Exclui permissões que não estão mais definidas no seeder.
+     */
+    private function deleteStalePermissions(): void
+    {
+        $this->command->info('Deleting stale permissions...');
+
+        $definedPermissions = [];
+
+        foreach ($this->modules as $module => $actions) {
+            foreach ($actions as $action) {
+                $definedPermissions[] = $this->formatPermissionName($action, $module);
+            }
+        }
+
+        $allPermissions = Permission::all();
+
+        foreach ($allPermissions as $permission) {
+            if (!in_array($permission->name, $definedPermissions)) {
+                $permission->delete();
+                $this->command->line("  - Deleted stale permission: {$permission->name}");
+            }
+        }
+    }
+
+    /**
+     * Exclui roles que não estão mais definidas no seeder.
+     */
+    private function deleteStaleRoles(): void
+    {
+        $this->command->info('Deleting stale roles...');
+
+        $definedRoles = array_keys($this->rolePermissions);
+
+        $allRoles = Role::all();
+
+        foreach ($allRoles as $role) {
+            if (!in_array($role->name, $definedRoles)) {
+                $role->delete();
+                $this->command->line("  - Deleted stale role: {$role->name}");
+            }
+        }
     }
 }
