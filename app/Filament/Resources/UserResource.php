@@ -24,10 +24,10 @@ class UserResource extends Resource
 
     protected static ?string $navigationGroup = 'Configurações';
 
-    // public static function canAccess(): bool
-    // {
-    //     return auth()->user()?->hasRole('super_admin') ?? false;
-    // }
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasRole('super_admin') ?? false;
+    }
 
     public static function form(Form $form): Form
     {
