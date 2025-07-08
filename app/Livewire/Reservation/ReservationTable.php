@@ -16,6 +16,7 @@ use Filament\Tables\Filters\{Filter, SelectFilter};
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\{Layout, Title};
 use Livewire\Component;
 
@@ -34,6 +35,7 @@ class ReservationTable extends Component implements HasForms, HasTable
                     ->with('user')
                     ->orderByRaw('ABS(DATEDIFF(date, CURDATE()))')
                     ->orderBy('start_time', 'asc')
+                    ->where('unit_id', Auth::user()->unit_id)
             )
             ->columns([
                 TextColumn::make('date')
