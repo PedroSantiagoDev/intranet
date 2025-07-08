@@ -6,6 +6,7 @@ use App\Helpers\CacheHelper;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\{Artisan, Cache};
 
+//TODO verificar o real uso desse arquivo
 class ClearAppCache extends Command
 {
     /**

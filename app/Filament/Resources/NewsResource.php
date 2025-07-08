@@ -4,13 +4,14 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\NewsResource\{Pages};
 use App\Models\News;
-use Filament\Forms\Components\{FileUpload, Hidden, Radio, Section, Select, TextInput, Toggle};
+use Filament\Forms\Components\{FileUpload, Hidden, Radio, Section, TextInput, Toggle};
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\{IconColumn, TextColumn};
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Filament\{Tables};
+use Illuminate\Support\Facades\Auth;
 
 class NewsResource extends Resource
 {
@@ -38,18 +39,14 @@ class NewsResource extends Resource
                             ->maxSize(2048) // 2MB
                             ->image()
                             ->required(),
-                        Select::make('unit_id')
-                            ->label('Unidade')
-                            ->relationship('unit', 'name')
-                            ->required()
-                            ->searchable()
-                            ->preload(),
                         Toggle::make('is_active')
                             ->label('Ativo?')
                              ->inline()
                             ->default(true),
+                        Hidden::make('unit_id')
+                           ->default(Auth::user()->unit_id),
                         Hidden::make('user_id')
-                            ->default(auth()->id()),
+                            ->default(Auth::id()),
                     ]),
 
                 Section::make('Link da Notícia')
@@ -93,7 +90,7 @@ class NewsResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(News::with(['user:id,name', 'unit:id,name'])) // Eager loading
+            ->query(News::where('unit_id', Auth::user()->unit_id))
             ->reorderable('sort')
             ->defaultSort('sort')
             ->columns([
@@ -108,17 +105,13 @@ class NewsResource extends Resource
                 TextColumn::make('created_at')
                     ->label('Criada em')
                     ->dateTime('d/m/Y H:i')
-                    ->sortable()
-                    ->since(),
+                    ->sortable(),
                 TextColumn::make('user.name')
                     ->label('Autor')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('unit.name')
-                    ->label('Unidade')
-                    ->searchable()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Unidade'),
             ])
             ->filters([
                 TernaryFilter::make('is_active')

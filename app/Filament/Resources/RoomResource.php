@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RoomResource\{Pages};
 use App\Models\Room;
-use Filament\Forms\Components\{Hidden, Select, TextInput, Toggle};
+use Filament\Forms\Components\{Hidden, TextInput, Toggle};
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\{IconColumn, TextColumn};
@@ -31,16 +31,12 @@ class RoomResource extends Resource
                     ->maxLength(255)
                     ->autofocus()
                     ->required(),
-                Select::make('unit_id')
-                    ->label('Unidade')
-                    ->relationship('unit', 'name')
-                    ->required()
-                    ->searchable()
-                    ->preload(),
                 Toggle::make('is_active')
                     ->label('Ativo?')
                     ->inline()
                     ->default(true),
+                Hidden::make('unit_id')
+                    ->default(Auth::user()->unit_id),
                 Hidden::make('user_id')
                     ->default(Auth::id()),
             ])->columns(1);
@@ -49,6 +45,7 @@ class RoomResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Room::where('unit_id', Auth::user()->unit_id))
             ->columns([
                 TextColumn::make('name')
                    ->label('Nome da Sala')

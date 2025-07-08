@@ -10,6 +10,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Columns\{IconColumn, TextColumn};
 use Filament\Tables\Table;
 use Filament\{Tables};
+use Illuminate\Support\Facades\Auth;
 
 class NewsAlertResource extends Resource
 {
@@ -41,12 +42,6 @@ class NewsAlertResource extends Resource
                         'alert' => 'Alerta',
                         'info'  => 'Informação',
                     ]),
-                Select::make('unit_id')
-                    ->label('Unidade')
-                    ->relationship('unit', 'name')
-                    ->required()
-                    ->searchable()
-                    ->preload(),
                 Toggle::make('is_active')
                     ->label('Ativo?')
                     ->inline()
@@ -56,14 +51,17 @@ class NewsAlertResource extends Resource
                     ->inline()
                     ->default(false)
                     ->helperText('Se ativado, o alerta será visível para todos os usuários, independentemente da unidade.'),
+                Hidden::make('unit_id')
+                    ->default(Auth::user()->unit_id),
                 Hidden::make('user_id')
-                    ->default(auth()->id()),
+                    ->default(Auth::id()),
             ])->columns(1);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->query(NewsAlert::where('unit_id', Auth::user()->unit_id))
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('title')
