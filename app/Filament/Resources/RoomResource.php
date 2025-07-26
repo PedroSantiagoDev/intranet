@@ -22,6 +22,11 @@ class RoomResource extends Resource
 
     protected static ?string $navigationGroup = 'Reservas';
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasRole(['admin', 'super_admin']) ?? false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form

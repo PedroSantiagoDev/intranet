@@ -22,6 +22,11 @@ class UnitLinkResource extends Resource
 
     protected static ?string $navigationGroup = 'Links';
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasRole(['admin', 'super_admin']) ?? false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
