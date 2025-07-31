@@ -53,7 +53,7 @@
                             {{ __("Profile") }}
                         </x-dropdown-link>
 
-                        @role(["admin", "news", "super_admin"])
+                        @role(["admin", "editor", "super_admin"])
                             <x-dropdown-link href="/admin" target="__blank" class="flex items-center gap-2">
                                 <x-filament::icon icon="heroicon-m-shield-check" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
                                 Admin
@@ -153,7 +153,7 @@
                     </div>
                 </div>
 
-                @role(["admin", "news", "super_admin"])
+                @role(["admin", "editor", "super_admin"])
                     <x-responsive-nav-link
                         href="/admin"
                         target="__blank"

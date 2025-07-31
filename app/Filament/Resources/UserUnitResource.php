@@ -2,31 +2,31 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\{Pages};
+use App\Filament\Resources\UserUnitResource\{Pages};
 use App\Models\User;
-use Filament\Forms\Components\{Section, Select, TextInput};
+use Filament\Forms\Components\{Hidden, Section, Select, TextInput};
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Columns\{TextColumn};
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Filament\{Tables};
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\{Auth, Hash};
 use Spatie\Permission\Models\Role;
 
-class UserResource extends Resource
+class UserUnitResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $label = "Usuários do Sistema";
+    protected static ?string $label = "Usuários";
 
     protected static ?string $navigationGroup = 'Configurações';
 
     public static function canAccess(): bool
     {
-        return auth()->user()?->hasRole('super_admin') ?? false;
+        return auth()->user()?->hasRole(['admin', 'super_admin']) ?? false;
     }
 
     public static function form(Form $form): Form
@@ -45,12 +45,6 @@ class UserResource extends Resource
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(255),
-                        Select::make('unit_id')
-                            ->label('Unidade')
-                            ->relationship('unit', 'name')
-                            ->required()
-                            ->searchable()
-                            ->preload(),
                         TextInput::make('password')
                             ->label('Senha')
                             ->password()
@@ -67,10 +61,12 @@ class UserResource extends Resource
                         Select::make('roles')
                             ->label('Funções')
                             ->relationship('roles', 'name')
-                            ->options(Role::all()->pluck('name', 'id'))
+                            ->options(Role::where('name', '!=', 'super_admin')->pluck('name', 'id')->all())
                             ->multiple()
                             ->preload()
                             ->searchable(),
+                        Hidden::make('unit_id')
+                            ->default(Auth::user()->unit_id),
                     ])->columns(2),
             ]);
     }
@@ -78,11 +74,12 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(User::where('unit_id', Auth::user()->unit_id))
             ->columns([
                 TextColumn::make('name')
-                   ->label('Nome')
-                   ->searchable()
-                   ->sortable(),
+                  ->label('Nome')
+                  ->searchable()
+                  ->sortable(),
                 TextColumn::make('email')
                     ->label('E-mail')
                     ->searchable()
@@ -102,16 +99,11 @@ class UserResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                SelectFilter::make('unit_id')
-                    ->label('Filtrar por Unidade')
-                    ->relationship('unit', 'name')
-                    ->searchable()
-                    ->preload(),
                 SelectFilter::make('roles')
-                    ->label('Filtrar por Função')
-                    ->relationship('roles', 'name')
-                    ->multiple()
-                    ->preload(),
+                   ->label('Filtrar por Função')
+                   ->relationship('roles', 'name')
+                   ->multiple()
+                   ->preload(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -133,9 +125,9 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit'   => Pages\EditUser::route('/{record}/edit'),
+            'index'  => Pages\ListUserUnits::route('/'),
+            'create' => Pages\CreateUserUnit::route('/create'),
+            'edit'   => Pages\EditUserUnit::route('/{record}/edit'),
         ];
     }
 }

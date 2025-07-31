@@ -11,7 +11,7 @@ class RolesAndPermissionsSeeder extends Seeder
     // Constants for Role Names
     public const ROLE_ADMIN       = 'admin';
     public const ROLE_SUPER_ADMIN = 'super_admin';
-    public const ROLE_NEWS        = 'news';
+    public const ROLE_EDITOR      = 'editor';
     public const ROLE_AUDITORIUM  = 'auditorium';
 
     // Constants for Permission Actions
@@ -25,7 +25,7 @@ class RolesAndPermissionsSeeder extends Seeder
      * Definição dos módulos e suas ações permitidas
      */
     private array $modules = [
-        self::ROLE_NEWS       => [self::ACTION_CREATE, self::ACTION_EDIT, self::ACTION_DELETE, self::ACTION_VIEW],
+        self::ROLE_EDITOR     => [self::ACTION_CREATE, self::ACTION_EDIT, self::ACTION_DELETE, self::ACTION_VIEW],
         self::ROLE_AUDITORIUM => [self::ACTION_CREATE, self::ACTION_EDIT, self::ACTION_DELETE, self::ACTION_VIEW, self::ACTION_CHANGE_STATUS],
     ];
 
@@ -35,9 +35,9 @@ class RolesAndPermissionsSeeder extends Seeder
     private array $rolePermissions = [
         self::ROLE_ADMIN       => '*', // Todas as permissões
         self::ROLE_SUPER_ADMIN => '*', // Todas as permissões
-        self::ROLE_NEWS        => [
-            'modules'      => [self::ROLE_NEWS],
-            'restrictions' => [], // Sem restrições - pode fazer tudo com news
+        self::ROLE_EDITOR      => [
+            'modules'      => [self::ROLE_EDITOR],
+            'restrictions' => [], // Sem restrições - pode fazer tudo com editor
         ],
 
         self::ROLE_AUDITORIUM => [
