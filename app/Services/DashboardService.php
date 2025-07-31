@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\{NewsAlert, UnitLink, UserLink};
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\{Auth, Cache};
+use Illuminate\Support\Facades\{Auth};
 
 class DashboardService
 {
@@ -25,9 +25,7 @@ class DashboardService
 
     private function getActiveUnitLinks(): Collection
     {
-        return Cache::remember('unit_links_links', 300, function () {
-            return UnitLink::where('is_active', true)->where('unit_id', Auth::user()->unit_id)->orderBy('sort')->get();
-        });
+        return UnitLink::where('is_active', true)->where('unit_id', Auth::user()->unit_id)->orderBy('sort')->get();
     }
 
     private function getActiveUserLinks(int $userId): Collection

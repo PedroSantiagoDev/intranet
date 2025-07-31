@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\{NewsAlert, VisitorLinksHeader};
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Cache;
 
 class HomeService
 {
@@ -18,9 +17,7 @@ class HomeService
 
     private function getActiveVisitorLinks(): Collection
     {
-        return Cache::remember('visitor_links_active', 300, function () {
-            return VisitorLinksHeader::where('is_active', true)->orderBy('sort')->get();
-        });
+        return VisitorLinksHeader::where('is_active', true)->orderBy('sort')->get();
     }
 
     private function getActiveNewsAlert(): ?NewsAlert
