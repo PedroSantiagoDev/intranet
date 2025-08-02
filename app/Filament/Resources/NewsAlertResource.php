@@ -22,6 +22,11 @@ class NewsAlertResource extends Resource
 
     protected static ?string $navigationGroup = 'Notícias';
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasRole('admin') ?? false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
