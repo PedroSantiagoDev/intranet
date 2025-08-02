@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
             'unit_id' => $unit->id,
         ]);
 
-        $admin->assignRole('admin');
+        $admin->assignRole('super_admin');
 
         $admin2 = User::factory()->create([
             'name'    => 'Carlos Victor',

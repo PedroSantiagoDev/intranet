@@ -24,7 +24,7 @@ class NewsAlertResource extends Resource
 
     public static function canAccess(): bool
     {
-        return auth()->user()?->hasRole('admin') ?? false;
+        return auth()->user()?->hasRole(['admin', 'super_admin']) ?? false;
     }
 
     public static function form(Form $form): Form

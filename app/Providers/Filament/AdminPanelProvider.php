@@ -3,7 +3,7 @@
 namespace App\Providers\Filament;
 
 use Filament\Http\Middleware\{Authenticate, AuthenticateSession, DisableBladeIconComponents, DispatchServingFilamentEvent};
-use Filament\{Pages, Panel, PanelProvider, Widgets};
+use Filament\{Panel, PanelProvider, Widgets};
 use Illuminate\Cookie\Middleware\{AddQueuedCookiesToResponse, EncryptCookies};
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -18,6 +18,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->homeUrl('/dashboard')
             ->login()
             ->font('Inter')
             ->brandLogo(asset('assets/logo.jpeg'))
